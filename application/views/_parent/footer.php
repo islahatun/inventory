@@ -27,6 +27,12 @@
 <!-- Template Main JS File -->
 <script src="<?= base_url('assets/') ?>assets/js/main.js"></script>
 
+<!-- javasript modif -->
+<script src="<?= base_url('assets/') ?>assets/js/js.js"></script>
+<!-- javascript modif -->
+
+<!-- Toastr -->
+<script src="<?= base_url('assets/') ?>toastr/toastr.min.js"></script>
 </body>
 
 </html>
