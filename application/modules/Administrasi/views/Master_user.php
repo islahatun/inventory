@@ -146,7 +146,7 @@
         initSelectRowDataTables('#dt', dt);
         // Get column data
         function initSelectRowDataTables(target, table) {
-            console.log(table)
+
             return $(target + ' tbody').off().on('click', 'tr', function() {
                 if ($(this).hasClass('info')) {
                     $(this).removeClass('info');
