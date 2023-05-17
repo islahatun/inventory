@@ -9,13 +9,13 @@
                 <div class="card-body mt-3">
 
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="create()">
+                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="create(this)">
                         Tambah
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm mb-3" onclick="edit()">
+                    <button type="button" class="btn btn-primary btn-sm mb-3" onclick="Edit(this)">
                         Ubah
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="remove()">
+                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="Remove(this)">
                         Hapus
                     </button>
 
@@ -32,7 +32,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                     <!-- End Default Table Example -->
@@ -80,12 +79,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label for="name" class="col-sm-4 col-form-label">Gambar profil</label>
-                                        <div class="col-sm-8">
-                                            <input required name="picture" class="form-control form-control" id="formFileLg" type="file">
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <div class="modal-footer">
@@ -105,6 +98,7 @@
 
 <script>
     var dt;
+    var formUrl;
     $(document).ready(function() {
 
         dt = $('#dt').DataTable({
@@ -149,13 +143,50 @@
             }, ]
         });
 
-    });
+        initSelectRowDataTables('#dt', dt);
+        // Get column data
+        function initSelectRowDataTables(target, table) {
+            console.log(table)
+            return $(target + ' tbody').off().on('click', 'tr', function() {
+                if ($(this).hasClass('info')) {
+                    $(this).removeClass('info');
+                } else {
+                    table.$('tr.info').removeClass('info');
+                    $(this).addClass('info');
+                }
+            });
+        }
 
-    // Get salary column data
+
+
+    });
 
 
     function create() {
-        $('#Modal').modal('show');
+        $('#Modal').modal('toggle');
+        formUrl = _url.concat('/save');
+    }
+
+    function Edit(obj) {
+        // var idx = getSelectedRowDataTables(dt);
+        // if (idx) {
+        //     var data = dt.row(idx.row).data();
+
+        // reset form
+        // $(fm).each(function() {
+        //     this.reset();
+        // });
+
+
+
+        // set title modal
+        // $(modalFm + " .modal-title").text($(obj).attr('title'));
+        // open modal
+        $('#Modal').modal('toggle');
+        formUrl = _url.concat('/update');
+        // } else {
+        //     showAlertMessage(lang.info, lang.no_data_selected, 'info');
+        // }
     }
 
     function reset(obj) {
@@ -197,7 +228,7 @@
     $("form").submit(function(e) {
         e.preventDefault();
         $.ajax({
-            url: _url.concat('/save'),
+            url: formUrl,
             type: 'post',
             data: $(this).serialize(),
             success: function(data, textStatus, jqXHR) {
@@ -206,7 +237,7 @@
                 // console.log(view);
                 if (view.status == true) {
                     toastr.success(view.message);
-                    var table = $('#t').DataTable();
+                    var table = $('#dt').DataTable();
                     table.ajax.reload();
                     $('#Modal').modal('hide');
                     clearText();
