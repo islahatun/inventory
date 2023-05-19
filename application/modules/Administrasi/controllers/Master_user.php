@@ -69,15 +69,17 @@ class Master_user extends CI_Controller
     }
     public function edit()
     {
-        $where =  $this->input->post('id');
+
+
         $data = [
+            'id' => $this->input->post('id'),
             'username' => $this->input->post('username'),
             'name' => $this->input->post('name'),
             'active' => $this->input->post('active'),
             'group_id' => $this->input->post('group_id'),
             'update_date' => date('y-m-d'),
         ];
-        $result =  $this->Master_user_model->edit($where, $data);
+        $result =  $this->Master_user_model->edit($data);
 
         if ($result) {
             $message = array(
