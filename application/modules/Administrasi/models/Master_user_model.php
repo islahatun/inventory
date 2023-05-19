@@ -27,7 +27,8 @@ class Master_user_model extends CI_Model
     public function edit($data)
     {
         $this->db->where('id', $data['id']);
-        $this->db->update('tbl_users', $data);
+        $result =  $this->db->update('tbl_users', $data);
+        return $result;
     }
     public function reset_password($data)
     {

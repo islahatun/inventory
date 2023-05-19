@@ -80,7 +80,6 @@ class Master_user extends CI_Controller
             'update_date' => date('y-m-d'),
         ];
         $result =  $this->Master_user_model->edit($data);
-
         if ($result) {
             $message = array(
                 'status' => true,
