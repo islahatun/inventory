@@ -46,6 +46,10 @@
     <script src="<?= base_url('assets/') ?>assets/js/js.js"></script>
     <!-- javascript modif -->
 
+    <!-- jquery-deserialize modif -->
+    <script src="<?= base_url('node_modules/') ?>jquery-deserialize/src/jquery.deserialize.js"></script>
+    <!-- jquery-deserialize modif -->
+
     <!-- DataTables -->
     <link href="<?= base_url('assets/') ?>DataTables/datatables.min.css" rel="stylesheet" />
 

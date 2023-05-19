@@ -15,7 +15,7 @@
                     <button type="button" class="btn btn-primary btn-sm mb-3" onclick="Edit(this)">
                         Ubah
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="Remove(this)">
+                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="Delete(this)">
                         Hapus
                     </button>
 
@@ -42,11 +42,12 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="ModalLabel">Tambah</h1>
+                                <h1 class="modal-title fs-5" id="ModalLabel"></h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="" enctype="multipart/form-data" method="post">
+                            <form id="fm" action="" enctype="multipart/form-data" method="post">
                                 <div class="modal-body">
+                                    <input type="hidden" name="id" id="">
                                     <div class="mb-3 row">
                                         <label for="username" class="col-sm-4 col-form-label">Username</label>
                                         <div class="col-sm-8">
@@ -97,14 +98,16 @@
 </section>
 
 <script>
-    var dt;
-    var formUrl;
+    let dt;
+    let formUrl;
+    let fm = '#fm';
+
     $(document).ready(function() {
 
         dt = $('#dt').DataTable({
             "destroy": true,
             "processing": true,
-            // "serverSide": true,
+            "select": true,
 
             ajax: {
                 type: "POST",
@@ -134,7 +137,7 @@
             ],
             "columnDefs": [{
                 "render": function(data, type, row, meta) {
-                    var ret = '<button type="button" class="btn btn-warning btn-sm"  onclick="reset(this)" data-index="' + row.id + '">Reset</button>'
+                    let ret = '<button type="button" class="btn btn-warning btn-sm"  onclick="reset(this)" data-index="' + row.id + '">Reset</button>'
                     return ret;
                 },
                 "className": 'text-center',
@@ -144,55 +147,85 @@
         });
 
         initSelectRowDataTables('#dt', dt);
-        // Get column data
-        function initSelectRowDataTables(target, table) {
-
-            return $(target + ' tbody').off().on('click', 'tr', function() {
-                if ($(this).hasClass('info')) {
-                    $(this).removeClass('info');
-                } else {
-                    table.$('tr.info').removeClass('info');
-                    $(this).addClass('info');
-                }
-            });
-        }
-
-
-
     });
 
 
     function create() {
+        // reset form
+        $(fm).each(function() {
+            this.reset();
+        });
         $('#Modal').modal('toggle');
+        $("#ModalLabel").html("Tambah")
         formUrl = _url.concat('/save');
     }
 
     function Edit(obj) {
-        // var idx = getSelectedRowDataTables(dt);
-        // if (idx) {
-        //     var data = dt.row(idx.row).data();
 
-        // reset form
-        // $(fm).each(function() {
-        //     this.reset();
-        // });
+        let idx = getSelectedRowDataTables(dt);
 
+        if (idx) {
+            let data = dt.row(idx.row).data();
+            // reset form
+            $(fm).each(function() {
+                this.reset();
+            });
 
+            // mengambil data 
+            $(fm).deserialize(data)
+            $(fm + ' [name=group_id]').val(data.group_id);
+            $(fm + ' [name=active]').val(data.active);
 
-        // set title modal
-        // $(modalFm + " .modal-title").text($(obj).attr('title'));
-        // open modal
-        $('#Modal').modal('toggle');
-        formUrl = _url.concat('/update');
-        // } else {
-        //     showAlertMessage(lang.info, lang.no_data_selected, 'info');
-        // }
+            // setting title modal
+            $("#ModalLabel").html("Ubah")
+            // open modal
+            $('#Modal').modal('toggle');
+            formUrl = _url.concat('/edit');
+
+        }
+    }
+
+    function Delete() {
+        let idx = getSelectedRowDataTables(dt);
+        if (idx) {
+            let data = dt.row(idx.row).data();
+            let dv = data.id
+            let value = {
+                id: dv
+            }
+            Swal.fire({
+                title: 'Apakah anda yakin.?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: _url.concat('/delete'),
+                        data: value,
+                        cache: false,
+                        success: function(data, textStatus, jqXHR) {
+                            let table = $('#dt').DataTable();
+                            table.ajax.reload();
+                            toastr.success('Data sandi berhasil dihapus.');
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            toastr.error('Data sandi gagal dihapus.');
+                        }
+                    });
+                }
+            })
+
+        }
     }
 
     function reset(obj) {
-        var idx = $(obj).attr('data-index');
+        let idx = $(obj).attr('data-index');
         if (idx) {
-            var value = {
+            let value = {
                 id: idx
             }
             Swal.fire({
@@ -210,7 +243,7 @@
                         data: value,
                         cache: false,
                         success: function(data, textStatus, jqXHR) {
-                            var table = $('#dt').DataTable();
+                            let table = $('#dt').DataTable();
                             table.ajax.reload();
                             toastr.success('Kata sandi berhasil diubah.');
                         },
@@ -233,11 +266,11 @@
             data: $(this).serialize(),
             success: function(data, textStatus, jqXHR) {
 
-                var view = jQuery.parseJSON(data);
+                let view = jQuery.parseJSON(data);
                 // console.log(view);
                 if (view.status == true) {
                     toastr.success(view.message);
-                    var table = $('#dt').DataTable();
+                    let table = $('#dt').DataTable();
                     table.ajax.reload();
                     $('#Modal').modal('hide');
                     clearText();

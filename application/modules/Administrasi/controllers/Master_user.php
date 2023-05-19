@@ -30,6 +30,7 @@ class Master_user extends CI_Controller
                 'id'         => $di->id,
                 'username'         => $di->username,
                 'name'         => $di->name,
+                'group_id'       => $di->group_id,
                 'group_name'       => $di->group_name,
                 'active'       => $di->active,
             );
@@ -40,8 +41,6 @@ class Master_user extends CI_Controller
     }
     public function save()
     {
-
-
         $data = array(
             'username' => $this->input->post('username'),
             'name' => $this->input->post('name'),
@@ -68,6 +67,31 @@ class Master_user extends CI_Controller
 
         echo json_encode($message);
     }
+    public function edit()
+    {
+        $where =  $this->input->post('id');
+        $data = [
+            'username' => $this->input->post('username'),
+            'name' => $this->input->post('name'),
+            'active' => $this->input->post('active'),
+            'group_id' => $this->input->post('group_id'),
+            'update_date' => date('y-m-d'),
+        ];
+        $result =  $this->Master_user_model->edit($where, $data);
+
+        if ($result) {
+            $message = array(
+                'status' => true,
+                'message' => 'Data pengguna berhasil diubah'
+            );
+        } else {
+            $message = array(
+                'status' => false,
+                'message' => 'Data pengguna gagal diubah'
+            );
+        }
+        echo json_encode($message);
+    }
     public function reset_password()
     {
         $data = [
@@ -75,5 +99,12 @@ class Master_user extends CI_Controller
             'password' => password_hash('Password', PASSWORD_DEFAULT)
         ];
         $this->Master_user_model->reset_password($data);
+    }
+    public function delete()
+    {
+
+        $where =  $this->input->post('id');
+
+        $this->Master_user_model->delete($where);
     }
 }

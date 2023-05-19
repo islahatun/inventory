@@ -24,9 +24,19 @@ class Master_user_model extends CI_Model
         $this->db->insert('tbl_users', $data);
         return true;
     }
+    public function edit($where, $data)
+    {
+        $this->db->where('id', $where);
+        $this->db->update('tbl_users', $data);
+    }
     public function reset_password($data)
     {
         $this->db->where('id', $data['id']);
         $this->db->update('tbl_users', array('password' => $data['password']));
+    }
+    public function delete($where)
+    {
+        $this->db->where('id', $where);
+        $this->db->delete('tbl_users');
     }
 }
