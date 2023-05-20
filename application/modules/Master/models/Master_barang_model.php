@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Master_user_model extends CI_Model
+class Master_barang_model extends CI_Model
 {
 
     public function __construct()
@@ -12,11 +12,6 @@ class Master_user_model extends CI_Model
     public function dataList()
     {
         $result = $this->db->get('user_vd')->result();
-        return $result;
-    }
-    public function getDataByName($username)
-    {
-        $result = $this->db->get_where('user_vd', array('username' => $username))->row();
         return $result;
     }
     public function get_group()

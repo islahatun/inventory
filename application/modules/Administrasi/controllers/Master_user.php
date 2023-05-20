@@ -41,35 +41,41 @@ class Master_user extends CI_Controller
     }
     public function save()
     {
-        $data = array(
-            'username' => $this->input->post('username'),
-            'name' => $this->input->post('name'),
-            'password' => password_hash('Password', PASSWORD_DEFAULT),
-            'active' => $this->input->post('active'),
-            'group_id' => $this->input->post('group_id'),
-            'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
-        );
-        $result =  $this->Master_user_model->save($data);
-
-        if ($result) {
+        $getName =  $this->Master_user_model->getDataByName($this->input->post('username'));
+        if ($getName) {
             $message = array(
-                'status' => true,
-                'message' => 'Data pengguna berhasil disimpan'
+                'status' => false,
+                'message' => 'Username sudah digunakan'
             );
         } else {
-            $message = array(
-                'status' => true,
-                'message' => 'Data pengguna gagal disimpan'
+            $data = array(
+                'username' => $this->input->post('username'),
+                'name' => $this->input->post('name'),
+                'password' => password_hash('Password', PASSWORD_DEFAULT),
+                'active' => $this->input->post('active'),
+                'group_id' => $this->input->post('group_id'),
+                'created_date' => date('y-m-d'),
+                // 'created_by' => $this->session->userdata('idUser')
             );
-        }
+            $result =  $this->Master_user_model->save($data);
 
+            if ($result) {
+                $message = array(
+                    'status' => true,
+                    'message' => 'Data pengguna berhasil disimpan'
+                );
+            } else {
+                $message = array(
+                    'status' => true,
+                    'message' => 'Data pengguna gagal disimpan'
+                );
+            }
+        }
 
         echo json_encode($message);
     }
     public function edit()
     {
-
 
         $data = [
             'id' => $this->input->post('id'),
