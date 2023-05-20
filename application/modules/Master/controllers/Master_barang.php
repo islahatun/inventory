@@ -12,7 +12,8 @@ class Master_barang extends CI_Controller
     public function index()
     {
         $data['title'] = 'Master barang';
-        $data['group'] = $this->Master_barang_model->get_group();
+        $data['jenis_barang'] = $this->Master_barang_model->get_jenis_barang();
+        $data['satuan'] = $this->Master_barang_model->get_satuan();
 
         $data['content_overview'] = $this->load->view('Master_barang', $data, true);
         $this->load->view('_parent/overview', $data);
@@ -28,9 +29,11 @@ class Master_barang extends CI_Controller
             $rtn[] = array(
                 'nomor'                 => $i,
                 'id_barang'         => $di->id_barang,
+                'id_jenis_barang'         => $di->id_jenis_barang,
+                'id_satuan'         => $di->id_satuan,
                 'nama_barang'         => $di->nama_barang,
-                'id_jenis_barang'       => $di->id_jenis_barang,
-                'id_satuan'       => $di->id_satuan,
+                'nama_jenis_barang'       => $di->nama_jenis_barang,
+                'nama_satuan'       => $di->nama_satuan,
                 'stok'       => $di->stok,
             );
             $i++;
@@ -41,9 +44,21 @@ class Master_barang extends CI_Controller
     public function save()
     {
 
+        $max = $this->Master_barang_model->get_max_id();
+
+        $urutan = $max + 1;
+
+        // membentuk kode barang baru
+        // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+        // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+        // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+        $huruf = "BRG";
+        $id_barang = $huruf . sprintf("%05s", $urutan);
+
+
         $data = array(
+            'id_barang' => $id_barang,
             'nama_barang' => $this->input->post('nama_barang'),
-            'stok' => $this->input->post('stok'),
             'id_satuan' => $this->input->post('id_satuan'),
             'id_jenis_barang' => $this->input->post('id_jenis_barang'),
             'created_date' => date('y-m-d'),
@@ -71,10 +86,9 @@ class Master_barang extends CI_Controller
 
 
         $data = [
-            'id' => $this->input->post('id'),
+            'id_barang' => $this->input->post('id_barang'),
             'nama_barang' => $this->input->post('nama_barang'),
-            'name' => $this->input->post('name'),
-            'active' => $this->input->post('active'),
+            'id_satuan' => $this->input->post('id_satuan'),
             'id_jenis_barang' => $this->input->post('id_jenis_barang'),
             'update_date' => date('y-m-d'),
         ];
@@ -91,14 +105,6 @@ class Master_barang extends CI_Controller
             );
         }
         echo json_encode($message);
-    }
-    public function reset_password()
-    {
-        $data = [
-            'id' => $this->input->post('id'),
-            'password' => password_hash('Password', PASSWORD_DEFAULT)
-        ];
-        $this->Master_barang_model->reset_password($data);
     }
     public function delete()
     {
