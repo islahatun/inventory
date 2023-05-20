@@ -11,8 +11,7 @@ class Master_jenis_barang extends CI_Controller
     }
     public function index()
     {
-        $data['title'] = 'Master barang';
-        $data['group'] = $this->Master_jenis_barang_model->get_group();
+        $data['title'] = 'Master Jenis Barang';
 
         $data['content_overview'] = $this->load->view('Master_jenis_barang', $data, true);
         $this->load->view('_parent/overview', $data);
@@ -27,11 +26,8 @@ class Master_jenis_barang extends CI_Controller
 
             $rtn[] = array(
                 'nomor'                 => $i,
-                'id_barang'         => $di->id_barang,
-                'nama_barang'         => $di->nama_barang,
-                'id_jenis_barang'       => $di->id_jenis_barang,
-                'id_satuan'       => $di->id_satuan,
-                'stok'       => $di->stok,
+                'id_jenis_barang'         => $di->id_jenis_barang,
+                'nama_jenis_barang'         => $di->nama_jenis_barang,
             );
             $i++;
         }
@@ -40,30 +36,32 @@ class Master_jenis_barang extends CI_Controller
     }
     public function save()
     {
-
-        $data = array(
-            'nama_barang' => $this->input->post('nama_barang'),
-            'stok' => $this->input->post('stok'),
-            'id_satuan' => $this->input->post('id_satuan'),
-            'id_jenis_barang' => $this->input->post('id_jenis_barang'),
-            'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
-        );
-        $result =  $this->Master_jenis_barang_model->save($data);
-
-        if ($result) {
+        $getName =  $this->Master_jenis_barang_model->getDataByName($this->input->post('nama_jenis_barang'));
+        if ($getName) {
             $message = array(
-                'status' => true,
-                'message' => 'Data pengguna berhasil disimpan'
+                'status' => false,
+                'message' => 'Nama satuan sudah digunakan'
             );
         } else {
-            $message = array(
-                'status' => true,
-                'message' => 'Data pengguna gagal disimpan'
+            $data = array(
+                'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
+                'created_date' => date('y-m-d'),
+                // 'created_by' => $this->session->userdata('idUser')
             );
+            $result =  $this->Master_jenis_barang_model->save($data);
+
+            if ($result) {
+                $message = array(
+                    'status' => true,
+                    'message' => 'Data satuan berhasil disimpan'
+                );
+            } else {
+                $message = array(
+                    'status' => true,
+                    'message' => 'Data satuan gagal disimpan'
+                );
+            }
         }
-
-
         echo json_encode($message);
     }
     public function edit()
@@ -71,35 +69,25 @@ class Master_jenis_barang extends CI_Controller
 
 
         $data = [
-            'id' => $this->input->post('id'),
-            'nama_barang' => $this->input->post('nama_barang'),
-            'name' => $this->input->post('name'),
-            'active' => $this->input->post('active'),
             'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+            'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
             'update_date' => date('y-m-d'),
         ];
         $result =  $this->Master_jenis_barang_model->edit($data);
         if ($result) {
             $message = array(
                 'status' => true,
-                'message' => 'Data pengguna berhasil diubah'
+                'message' => 'Data satuan berhasil diubah'
             );
         } else {
             $message = array(
                 'status' => false,
-                'message' => 'Data pengguna gagal diubah'
+                'message' => 'Data satuan gagal diubah'
             );
         }
         echo json_encode($message);
     }
-    public function reset_password()
-    {
-        $data = [
-            'id' => $this->input->post('id'),
-            'password' => password_hash('Password', PASSWORD_DEFAULT)
-        ];
-        $this->Master_jenis_barang_model->reset_password($data);
-    }
+
     public function delete()
     {
 

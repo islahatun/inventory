@@ -24,11 +24,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Username</th>
-                                <th scope="col" class="text-center">Nama</th>
-                                <th scope="col" class="text-center">Posisi</th>
-                                <th scope="col" class="text-center">Aktif</th>
-                                <th scope="col" class="text-center">Aksi</th>
+                                <th scope="col" class="text-center">Jenis Barang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,40 +43,13 @@
                             </div>
                             <form id="fm" action="" enctype="multipart/form-data" method="post">
                                 <div class="modal-body">
-                                    <input type="hidden" name="id" id="">
+                                    <input type="hidden" name="id_jenis_barang" id="">
                                     <div class="mb-3 row">
-                                        <label for="username" class="col-sm-4 col-form-label">Username</label>
+                                        <label for="nama_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
                                         <div class="col-sm-8">
-                                            <input required type="text" class="form-control" id="username" name="username">
+                                            <input required type="text" class="form-control" id="nama_jenis_barang" name="nama_jenis_barang">
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label for="name" class="col-sm-4 col-form-label">Nama</label>
-                                        <div class="col-sm-8">
-                                            <input required type="text" class="form-control" id="name" name="name">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="group_id" class="col-sm-4 col-form-label">Posisi</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="group_id" id="group_id">
-                                                <option selected>Posisi</option>
-                                                <?php foreach ($group as $g) : ?>
-                                                    <option value="<?= $g->id_group ?>"><?= $g->group_name ?></option>
-                                                <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="active" class="col-sm-4 col-form-label">Aktif</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="active" id="active">
-                                                <option value="Y">Ya</option>
-                                                <option value="N">Tidak</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -119,31 +88,10 @@
                     className: "align-middle text-center small"
                 },
                 {
-                    "data": "username",
+                    "data": "nama_jenis_barang",
                     className: "align-middle small"
-                },
-                {
-                    "data": "name",
-                    className: "align-middle small"
-                },
-                {
-                    "data": "group_name",
-                    className: "align-middle small"
-                },
-                {
-                    "data": "active",
-                    className: "align-middle text-center small"
                 }
-            ],
-            "columnDefs": [{
-                "render": function(data, type, row, meta) {
-                    let ret = '<button type="button" class="btn btn-warning btn-sm"  onclick="reset(this)" data-index="' + row.id + '">Reset</button>'
-                    return ret;
-                },
-                "className": 'text-center',
-                "targets": 5
-
-            }, ]
+            ]
         });
 
         initSelectRowDataTables('#dt', dt);
@@ -173,8 +121,6 @@
 
             // mengambil data 
             $(fm).deserialize(data)
-            $(fm + ' [name=group_id]').val(data.group_id);
-            $(fm + ' [name=active]').val(data.active);
 
             // setting title modal
             $("#ModalLabel").html("Ubah")
@@ -189,7 +135,7 @@
         let idx = getSelectedRowDataTables(dt);
         if (idx) {
             let data = dt.row(idx.row).data();
-            let dv = data.id
+            let dv = data.id_jenis_barang
             let value = {
                 id: dv
             }
@@ -218,42 +164,6 @@
                     });
                 }
             })
-
-        }
-    }
-
-    function reset(obj) {
-        let idx = $(obj).attr('data-index');
-        if (idx) {
-            let value = {
-                id: idx
-            }
-            Swal.fire({
-                title: 'Apakah anda yakin.? katasandi akan diubah menjadi 123456',
-                text: "Password yang di reset tidak dapat dikembalikan!",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: _url.concat('/reset_password'),
-                        data: value,
-                        cache: false,
-                        success: function(data, textStatus, jqXHR) {
-                            let table = $('#dt').DataTable();
-                            table.ajax.reload();
-                            toastr.success('Kata sandi berhasil diubah.');
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            toastr.error('Kata sandi gagal diubah.');
-                        }
-                    });
-                }
-            })
-
 
         }
     }
