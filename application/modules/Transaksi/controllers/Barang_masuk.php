@@ -11,7 +11,7 @@ class Barang_masuk extends CI_Controller
     }
     public function index()
     {
-        $data['title'] = 'Master barang';
+        $data['title'] = 'Barang Masuk';
         $data['barang'] = $this->Barang_masuk_model->get_barang();
 
         $data['content_overview'] = $this->load->view('Barang_masuk', $data, true);

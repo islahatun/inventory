@@ -34,7 +34,7 @@ class Barang_keluar_model extends CI_Model
         $header =  $this->db->insert('trans_barang_keluar', $data);
         if ($header) {
             $barang = $this->db->get_where('tbl_barang', array('id_barang' => $data['id_barang']))->row();
-            $stok = $barang->stok + $data['stok_keluar'];
+            $stok = $barang->stok - $data['stok_keluar'];
             $this->db->where('id_barang', $data['id_barang']);
             $this->db->update('tbl_barang', ['stok' => $stok]);
         }

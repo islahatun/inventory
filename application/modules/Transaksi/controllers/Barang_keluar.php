@@ -11,7 +11,7 @@ class Barang_keluar extends CI_Controller
     }
     public function index()
     {
-        $data['title'] = 'Master barang';
+        $data['title'] = 'Barang keluar';
         $data['barang'] = $this->Barang_keluar_model->get_barang();
 
         $data['content_overview'] = $this->load->view('Barang_keluar', $data, true);
@@ -70,12 +70,12 @@ class Barang_keluar extends CI_Controller
         if ($result) {
             $message = array(
                 'status' => true,
-                'message' => 'Barang masuk berhasil disimpan'
+                'message' => 'Barang keluar berhasil disimpan'
             );
         } else {
             $message = array(
                 'status' => true,
-                'message' => 'Barang masuk gagal disimpan'
+                'message' => 'Barang keluar gagal disimpan'
             );
         }
 
