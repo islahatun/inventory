@@ -1,24 +1,25 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Master_jenis_barang extends CI_Controller
+class Barang_keluar extends CI_Controller
 {
     public function __construct()
     {
 
         parent::__construct();
-        $this->load->model('Master_jenis_barang_model');
+        $this->load->model('Barang_keluar_model');
     }
     public function index()
     {
-        $data['title'] = 'Master Jenis Barang';
+        $data['title'] = 'Master barang';
+        $data['barang'] = $this->Barang_keluar_model->get_barang();
 
-        $data['content_overview'] = $this->load->view('Master_jenis_barang', $data, true);
+        $data['content_overview'] = $this->load->view('Barang_keluar', $data, true);
         $this->load->view('_parent/overview', $data);
     }
     public function datalist()
     {
-        $list = $this->Master_jenis_barang_model->dataList();
+        $list = $this->Barang_keluar_model->dataList();
         $rtn = array();
         $i = 1;
 
@@ -26,8 +27,14 @@ class Master_jenis_barang extends CI_Controller
 
             $rtn[] = array(
                 'nomor'                 => $i,
-                'id_jenis_barang'         => $di->id_jenis_barang,
-                'nama_jenis_barang'         => $di->nama_jenis_barang,
+                'id_trans_keluar'         => $di->id_trans_keluar,
+                'id_barang'         => $di->id_barang,
+                'nama_barang'         => $di->nama_barang,
+                'tanggal_keluar'         => $di->tanggal_keluar,
+                'stok_keluar'         => $di->stok_keluar,
+                'stok_keluar_current' => $di->stok_keluar_current,
+                'created_by'       => $di->created_by,
+                'username'       => $di->username,
             );
             $i++;
         }
@@ -36,63 +43,80 @@ class Master_jenis_barang extends CI_Controller
     }
     public function save()
     {
-        $getName =  $this->Master_jenis_barang_model->getDataByName($this->input->post('nama_jenis_barang'));
-        if ($getName) {
+        // mengambil data sesuai jumlah row
+        $max = $this->Barang_keluar_model->get_max_id();
+
+        $urutan = $max + 1;
+        $date = date('ymd');
+
+        // membentuk kode barang baru
+        // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+        // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+        // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+        $huruf = "TRS-" . $date;
+        $id_trans_keluar = $huruf . sprintf("%05s", $urutan);
+
+
+        $data = array(
+            'id_trans_keluar' => $id_trans_keluar,
+            'id_barang' => $this->input->post('id_barang'),
+            'tanggal_keluar' => $this->input->post('tanggal_keluar'),
+            'stok_keluar' => $this->input->post('stok_keluar'),
+            'created_date' => date('y-m-d'),
+            // 'created_by' => $this->session->userdata('idUser')
+        );
+        $result =  $this->Barang_keluar_model->save($data);
+
+        if ($result) {
             $message = array(
-                'status' => false,
-                'message' => 'Nama satuan sudah digunakan'
+                'status' => true,
+                'message' => 'Barang masuk berhasil disimpan'
             );
         } else {
-            $data = array(
-                'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
-                'created_date' => date('y-m-d'),
-                // 'created_by' => $this->session->userdata('idUser')
+            $message = array(
+                'status' => true,
+                'message' => 'Barang masuk gagal disimpan'
             );
-            $result =  $this->Master_jenis_barang_model->save($data);
-
-            if ($result) {
-                $message = array(
-                    'status' => true,
-                    'message' => 'Data satuan berhasil disimpan'
-                );
-            } else {
-                $message = array(
-                    'status' => true,
-                    'message' => 'Data satuan gagal disimpan'
-                );
-            }
         }
+
+
         echo json_encode($message);
     }
     public function edit()
     {
-
+        $stok = $this->Barang_keluar_model->stok_barang($this->input->post('id_barang'));
+        $count = ($stok->stok -  $this->input->post('stok_keluar_current')) - $this->input->post('stok_keluar');
 
         $data = [
-            'id_jenis_barang' => $this->input->post('id_jenis_barang'),
-            'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
+            'id_trans_keluar' => $this->input->post('id_trans_keluar'),
+            'id_barang' => $this->input->post('id_barang'),
+            'tanggal_keluar' => $this->input->post('tanggal_keluar'),
+            'stok_keluar' => $this->input->post('stok_keluar'),
             'update_date' => date('y-m-d'),
         ];
-        $result =  $this->Master_jenis_barang_model->edit($data);
+
+        $data_barang = [
+            'stok' => $count
+        ];
+        $result =  $this->Barang_keluar_model->edit($data, $data_barang);
         if ($result) {
             $message = array(
                 'status' => true,
-                'message' => 'Data satuan berhasil diubah'
+                'message' => 'Barang masuk berhasil diubah'
             );
         } else {
             $message = array(
                 'status' => false,
-                'message' => 'Data satuan gagal diubah'
+                'message' => 'Barang masuk gagal diubah'
             );
         }
         echo json_encode($message);
     }
-
     public function delete()
     {
 
         $where =  $this->input->post('id');
 
-        $this->Master_jenis_barang_model->delete($where);
+        $this->Barang_keluar_model->delete($where);
     }
 }

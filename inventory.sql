@@ -11,7 +11,7 @@
  Target Server Version : 100424 (10.4.24-MariaDB)
  File Encoding         : 65001
 
- Date: 20/05/2023 16:06:31
+ Date: 22/05/2023 09:08:50
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `tbl_barang`  (
 -- ----------------------------
 -- Records of tbl_barang
 -- ----------------------------
-INSERT INTO `tbl_barang` VALUES ('BRG00003', 'sasas', 4, 4, 0, '2023-05-20 00:00:00', NULL, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00003', 'sasas', 4, 4, 21, '2023-05-20 00:00:00', NULL, NULL, NULL);
 INSERT INTO `tbl_barang` VALUES ('BRG002', 'nama barang ahaa', 2, 2, 0, '2023-05-20 00:00:00', NULL, NULL, NULL);
 
 -- ----------------------------
@@ -150,8 +150,8 @@ INSERT INTO `tbl_users` VALUES (14, 'produksi2', 'produksi2', '$2y$10$udQVA0EovY
 -- ----------------------------
 DROP TABLE IF EXISTS `trans_barang_keluar`;
 CREATE TABLE `trans_barang_keluar`  (
-  `id_trans_keluar` int NOT NULL,
-  `id_barang` int NULL DEFAULT NULL,
+  `id_trans_keluar` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_barang` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_keluar` date NULL DEFAULT NULL,
   `stok_keluar` int NULL DEFAULT NULL,
   `created_date` datetime NULL DEFAULT NULL,
@@ -170,8 +170,8 @@ CREATE TABLE `trans_barang_keluar`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `trans_barang_masuk`;
 CREATE TABLE `trans_barang_masuk`  (
-  `id_trans_masuk` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_barang` int NULL DEFAULT NULL,
+  `id_trans_masuk` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_barang` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_masuk` date NULL DEFAULT NULL,
   `stok_masuk` int NULL DEFAULT NULL,
   `created_date` datetime NULL DEFAULT NULL,
@@ -184,6 +184,9 @@ CREATE TABLE `trans_barang_masuk`  (
 -- ----------------------------
 -- Records of trans_barang_masuk
 -- ----------------------------
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052000001', 'BRG00003', '2023-05-20', 6, '2023-05-20 00:00:00', NULL, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200002', 'BRG00003', '2023-05-22', 2, '2023-05-22 00:00:00', 2, '2023-05-22 00:00:00', NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200003', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 2, '2023-05-22 00:00:00', NULL);
 
 -- ----------------------------
 -- View structure for barang_vd
@@ -209,16 +212,35 @@ FROM
 		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
 
 -- ----------------------------
+-- View structure for trans_barang_keluar_vd
+-- ----------------------------
+DROP VIEW IF EXISTS `trans_barang_keluar_vd`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `trans_barang_keluar_vd` AS SELECT
+	trans_barang_keluar.stok_keluar AS stok_keluar_current,
+	trans_barang_keluar.id_trans_keluar,
+	trans_barang_keluar.id_barang,
+	trans_barang_keluar.tanggal_keluar,
+	trans_barang_keluar.stok_keluar,
+	trans_barang_keluar.created_by,
+	tbl_barang.nama_barang,
+	tbl_users.`username` 
+FROM
+	trans_barang_keluar
+	INNER JOIN tbl_barang ON trans_barang_keluar.id_barang = tbl_barang.id_barang
+	INNER JOIN tbl_users ON trans_barang_keluar.created_by = tbl_users.id ;
+
+-- ----------------------------
 -- View structure for trans_barang_masuk_vd
 -- ----------------------------
 DROP VIEW IF EXISTS `trans_barang_masuk_vd`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `trans_barang_masuk_vd` AS SELECT
+trans_barang_masuk.stok_masuk as stok_masuk_current, 
 	trans_barang_masuk.id_trans_masuk, 
 	trans_barang_masuk.id_barang, 
 	trans_barang_masuk.tanggal_masuk, 
 	trans_barang_masuk.stok_masuk, 
 	trans_barang_masuk.created_by, 
-	tbl_barang.nama_barang, 
+	tbl_barang.nama_barang,
 	tbl_users.`username`
 FROM
 	trans_barang_masuk

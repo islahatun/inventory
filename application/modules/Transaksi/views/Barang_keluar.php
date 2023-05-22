@@ -27,8 +27,8 @@
                                 <th scope="col" class="text-center">Id Transaksi</th>
                                 <th scope="col" class="text-center">Id Barang</th>
                                 <th scope="col" class="text-center">Nama Barang</th>
-                                <th scope="col" class="text-center">Tanggal Masuk</th>
-                                <th scope="col" class="text-center">Jumlah Barang masuk</th>
+                                <th scope="col" class="text-center">Tanggal keluar</th>
+                                <th scope="col" class="text-center">Jumlah Barang keluar</th>
                                 <th scope="col" class="text-center">Diinput Oleh</th>
                             </tr>
                         </thead>
@@ -48,8 +48,8 @@
                             </div>
                             <form id="fm" action="" enctype="multipart/form-data" method="post">
                                 <div class="modal-body">
-                                    <input type="hidden" name="id_trans_masuk" id="">
-                                    <input type="hidden" name="stok_masuk_current" id="">
+                                    <input type="hidden" name="id_trans_keluar" id="">
+                                    <input type="hidden" name="stok_keluar_current" id="">
                                     <div class="mb-3 row">
                                         <label for="id_barang" class="col-sm-4 col-form-label">Nama Barang</label>
                                         <div class="col-sm-8">
@@ -62,16 +62,16 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="tanggal_masuk" class="col-sm-4 col-form-label">Tanggal Masuk</label>
+                                        <label for="tanggal_keluar" class="col-sm-4 col-form-label">Tanggal Keluar</label>
                                         <div class="col-sm-8">
-                                            <input required type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk">
+                                            <input required type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="stok_masuk" class="col-sm-4 col-form-label">Jumlah Barang</label>
+                                        <label for="stok_keluar" class="col-sm-4 col-form-label">Jumlah Barang</label>
                                         <div class="col-sm-8">
-                                            <input required type="number" class="form-control" id="stok_masuk" name="stok_masuk">
+                                            <input required type="number" class="form-control" id="stok_keluar" name="stok_keluar">
                                         </div>
                                     </div>
 
@@ -113,7 +113,7 @@
                     className: "align-middle text-center small"
                 },
                 {
-                    "data": "id_trans_masuk",
+                    "data": "id_trans_keluar",
                     className: "align-middle small"
                 },
                 {
@@ -125,11 +125,11 @@
                     className: "align-middle small"
                 },
                 {
-                    "data": "tanggal_masuk",
+                    "data": "tanggal_keluar",
                     className: "align-middle small"
                 },
                 {
-                    "data": "stok_masuk",
+                    "data": "stok_keluar",
                     className: "align-middle text-center small"
                 },
                 {
@@ -181,7 +181,7 @@
         let idx = getSelectedRowDataTables(dt);
         if (idx) {
             let data = dt.row(idx.row).data();
-            let dv = data.id_trans_masuk
+            let dv = data.id_trans_keluar
             let value = {
                 id: dv
             }

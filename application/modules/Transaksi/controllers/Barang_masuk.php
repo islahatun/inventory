@@ -32,6 +32,7 @@ class Barang_masuk extends CI_Controller
                 'nama_barang'         => $di->nama_barang,
                 'tanggal_masuk'         => $di->tanggal_masuk,
                 'stok_masuk'         => $di->stok_masuk,
+                'stok_masuk_current' => $di->stok_masuk_current,
                 'created_by'       => $di->created_by,
                 'username'       => $di->username,
             );
@@ -42,7 +43,7 @@ class Barang_masuk extends CI_Controller
     }
     public function save()
     {
-
+        // mengambil data sesuai jumlah row
         $max = $this->Barang_masuk_model->get_max_id();
 
         $urutan = $max + 1;
@@ -83,7 +84,8 @@ class Barang_masuk extends CI_Controller
     }
     public function edit()
     {
-
+        $stok = $this->Barang_masuk_model->stok_barang($this->input->post('id_barang'));
+        $count = ($stok->stok -  $this->input->post('stok_masuk_current')) + $this->input->post('stok_masuk');
 
         $data = [
             'id_trans_masuk' => $this->input->post('id_trans_masuk'),
@@ -92,7 +94,11 @@ class Barang_masuk extends CI_Controller
             'stok_masuk' => $this->input->post('stok_masuk'),
             'update_date' => date('y-m-d'),
         ];
-        $result =  $this->Barang_masuk_model->edit($data);
+
+        $data_barang = [
+            'stok' => $count
+        ];
+        $result =  $this->Barang_masuk_model->edit($data, $data_barang);
         if ($result) {
             $message = array(
                 'status' => true,
