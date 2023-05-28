@@ -3,24 +3,57 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth extends CI_Controller
 {
+    public function __construct()
+    {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     *	- or -
-     * 		http://example.com/index.php/welcome/index
-     *	- or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see https://codeigniter.com/userguide3/general/urls.html
-     */
+        parent::__construct();
+        $this->load->model('Auth_model');
+    }
     public function index()
     {
         $this->load->view('Auth');
+    }
+    public function login()
+    {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+        $row = $this->Auth_model->login($username);
+
+        if ($row->num_rows() > 0) {
+            $hasil = $row->row();
+            if (password_verify($password, $hasil->password)) {
+                if ($hasil->active == 1) {
+                    $data = [
+                        'id' => $hasil->id,
+                        'username' => $hasil->username,
+                        'group_id' => $hasil->group_id
+                    ];
+                    $this->session->set_userdata($data);
+                    $data['content_overview'] = $this->load->view('Dashboard', true);
+                    $this->load->view('_parent/overview', $data);
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun sudah tidak aktif !</div>'); //Kirim message ke form login 
+                    redirect('Auth');
+                }
+            } else {
+
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Anda Salah !</div>'); //Kirim message ke form login 
+                redirect('Auth');
+            }
+        } else {
+
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username & Password Anda Salah !</div>'); //Kirim message ke form login 
+            redirect('Auth');
+        }
+    }
+    function logout()
+    {
+        $this->session->unset_userdata('idUser');
+        $this->session->unset_userdata('nik');
+        $this->session->unset_userdata('group_id');
+        $this->session->unset_userdata('name');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda telah logout. </div>');
+        redirect('auth/index');
     }
 }

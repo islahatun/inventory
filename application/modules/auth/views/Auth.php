@@ -26,6 +26,18 @@
     <link href="<?= base_url('assets/') ?>assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
+    <!-- javasript modif -->
+    <script src="<?= base_url('assets/') ?>assets/js/js.js"></script>
+    <!-- javascript modif -->
+
+    <!-- jquery -->
+    <script src="<?= base_url('assets/') ?>node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- jquery end -->
+
+    <!-- jquery-deserialize modif -->
+    <script src="<?= base_url('node_modules/') ?>jquery-deserialize/src/jquery.deserialize.js"></script>
+    <!-- jquery-deserialize modif -->
+
     <!-- Template Main CSS File -->
     <link href="<?= base_url('assets/') ?>assets/css/style.css" rel="stylesheet">
 
@@ -64,7 +76,13 @@
                                         <p class="text-center small">Enter your username & password to login</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate>
+                                    <div>
+                                        <?php if ($this->session->flashdata('message')) : ?>
+                                            <?= $this->session->flashdata('message') ?>
+                                        <?php endif ?>
+                                    </div>
+
+                                    <form method="post" action="<?= base_url('Auth/Auth/login') ?>" class="row g-3 needs-validation" novalidate>
 
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Username</label>
@@ -111,6 +129,7 @@
 
     <!-- Template Main JS File -->
     <script src="<?= base_url('assets/') ?>assets/js/main.js"></script>
+
 
 </body>
 
