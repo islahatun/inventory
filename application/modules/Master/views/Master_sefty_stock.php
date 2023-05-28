@@ -117,11 +117,11 @@
                 },
                 {
                     "data": "pengambilan_harian_maximum",
-                    className: "align-middle text-center small"
+                    className: "align-middle small"
                 },
                 {
                     "data": "persediaan_cadangan",
-                    className: "align-middle text-center small"
+                    className: "align-middle small"
                 }
             ]
         });

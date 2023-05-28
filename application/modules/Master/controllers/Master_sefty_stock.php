@@ -28,9 +28,9 @@ class Master_sefty_stock extends CI_Controller
             $rtn[] = array(
                 'nomor'                 => $i,
                 'nama_barang'         => $di->nama_barang,
-                'pengambilan_harian_maximum'         => $di->pengambilan_harian_maximum,
+                'pengambilan_harian_maximum'         => $di->pengambilan_harian_maximum . ' ' . $di->nama_satuan,
                 'jumlah_hari'         => $di->jumlah_hari,
-                'persediaan_cadangan'       => $di->persediaan_cadangan,
+                'persediaan_cadangan'       => $di->persediaan_cadangan . ' ' . $di->nama_satuan,
                 'id_barang'       => $di->id_barang,
             );
             $i++;
