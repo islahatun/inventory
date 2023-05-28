@@ -11,9 +11,8 @@ class Master_rop extends CI_Controller
     }
     public function index()
     {
-        $data['title'] = 'Master barang';
-        $data['jenis_barang'] = $this->Master_rop_model->get_jenis_barang();
-        $data['satuan'] = $this->Master_rop_model->get_satuan();
+        $data['title'] = 'ROP';
+        $data['barang'] = $this->Master_rop_model->get_persediaan_cadangan_barang();
 
         $data['content_overview'] = $this->load->view('Master_rop', $data, true);
         $this->load->view('_parent/overview', $data);
@@ -28,13 +27,13 @@ class Master_rop extends CI_Controller
 
             $rtn[] = array(
                 'nomor'                 => $i,
-                'id_barang'         => $di->id_barang,
-                'id_jenis_barang'         => $di->id_jenis_barang,
-                'id_satuan'         => $di->id_satuan,
+                'id_rop'         => $di->id_rop,
                 'nama_barang'         => $di->nama_barang,
-                'nama_jenis_barang'       => $di->nama_jenis_barang,
-                'nama_satuan'       => $di->nama_satuan,
-                'stok'       => $di->stok,
+                'titik_pemesanan_kembali'         => $di->titik_pemesanan_kembali,
+                'waktu_tunggu'         => $di->waktu_tunggu,
+                'permintaan_rata_rata'       => $di->permintaan_rata_rata,
+                'persediaan_cadangan'       => $di->persediaan_cadangan . ' ' . $di->nama_satuan,
+                'id_persediaan_cadangan'       => $di->id_persediaan_cadangan,
             );
             $i++;
         }
@@ -43,24 +42,16 @@ class Master_rop extends CI_Controller
     }
     public function save()
     {
+        $ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($this->input->post('id_persediaan_cadangan'));
 
-        $max = $this->Master_rop_model->get_max_id();
-
-        $urutan = $max + 1;
-
-        // membentuk kode barang baru
-        // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
-        // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
-        // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-        $huruf = "BRG";
-        $id_barang = $huruf . sprintf("%05s", $urutan);
-
-
+        $rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
         $data = array(
-            'id_barang' => $id_barang,
-            'nama_barang' => $this->input->post('nama_barang'),
-            'id_satuan' => $this->input->post('id_satuan'),
-            'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+            'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+            'titik_pemesanan_kembali' => $rop,
+            'id_persediaan_cadangan' => $this->input->post('id_persediaan_cadangan'),
+            'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+            'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+            'persediaan_cadangan' => $ss->persediaan_cadangan,
             'created_date' => date('y-m-d'),
             // 'created_by' => $this->session->userdata('idUser')
         );
@@ -86,10 +77,13 @@ class Master_rop extends CI_Controller
 
 
         $data = [
-            'id_barang' => $this->input->post('id_barang'),
-            'nama_barang' => $this->input->post('nama_barang'),
-            'id_satuan' => $this->input->post('id_satuan'),
-            'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+            'id_rop' => $this->input->post('id_rop'),
+            'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+            'titik_pemesanan_kembali' => $this->input->post('titik_pemesanan_kembali'),
+            'id_persediaan_cadangan' => $this->input->post('id_persediaan_cadangan'),
+            'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+            'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+            'persediaan_cadangan' => $this->input->post('persediaan_cadangan'),
             'update_date' => date('y-m-d'),
         ];
         $result =  $this->Master_rop_model->edit($data);

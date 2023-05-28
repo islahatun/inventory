@@ -11,38 +11,33 @@ class Master_rop_model extends CI_Model
 
     public function dataList()
     {
-        $result = $this->db->get('barang_vd')->result();
+        $result = $this->db->get('rop_vd')->result();
         return $result;
     }
-    public function get_max_id()
+    public function get_persediaan_cadangan_barang()
     {
-        $result =  $this->db->get('tbl_barang')->num_rows();
+        $result =  $this->db->get('sefty_stock_vd')->result();
         return $result;
     }
-    public function get_jenis_barang()
+    public function get_persediaan_cadangan_barang_byId()
     {
-        $result =  $this->db->get('tbl_jenis_barang')->result();
-        return $result;
-    }
-    public function get_satuan()
-    {
-        $result =  $this->db->get('tbl_satuan')->result();
+        $result =  $this->db->get('sefty_stock_vd')->row();
         return $result;
     }
     public function save($data)
     {
-        $this->db->insert('tbl_barang', $data);
+        $this->db->insert('tbl_rop', $data);
         return true;
     }
     public function edit($data)
     {
-        $this->db->where('id_barang', $data['id_barang']);
-        $result =  $this->db->update('tbl_barang', $data);
+        $this->db->where('id_rop', $data['id_rop']);
+        $result =  $this->db->update('tbl_rop', $data);
         return $result;
     }
     public function delete($where)
     {
-        $this->db->where('id_barang', $where);
-        $this->db->delete('tbl_barang');
+        $this->db->where('id_rop', $where);
+        $this->db->delete('tbl_rop');
     }
 }

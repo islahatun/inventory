@@ -24,11 +24,11 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Kode Barang</th>
                                 <th scope="col" class="text-center">Nama Barang</th>
-                                <th scope="col" class="text-center">Jenis Barang</th>
-                                <th scope="col" class="text-center">Satuan Barang</th>
-                                <th scope="col" class="text-center">Stok Barang</th>
+                                <th scope="col" class="text-center">Waktu Tunggu (Hari)</th>
+                                <th scope="col" class="text-center">Permintaan Rata-rata</th>
+                                <th scope="col" class="text-center">Persediaan Cadangan</th>
+                                <th scope="col" class="text-center">ROP</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +39,7 @@
 
                 <!-- Modal -->
                 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="ModalLabel"></h1>
@@ -47,35 +47,31 @@
                             </div>
                             <form id="fm" action="" enctype="multipart/form-data" method="post">
                                 <div class="modal-body">
-                                    <input type="hidden" name="id_barang" id="">
+                                    <input type="hidden" name="id_rop" id="">
                                     <div class="mb-3 row">
-                                        <label for="nama_barang" class="col-sm-4 col-form-label">Nama Barang</label>
-                                        <div class="col-sm-8">
-                                            <input required type="text" class="form-control" id="nama_barang" name="nama_barang">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="id_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_jenis_barang" id="id_jenis_barang">
-                                                <option selected> ---------- Jenis Barang ---------- </option>
-                                                <?php foreach ($jenis_barang as $jb) : ?>
-                                                    <option value="<?= $jb->id_jenis_barang ?>"><?= $jb->nama_jenis_barang ?></option>
+                                        <label for="id_persediaan_cadangan" class="col-sm-6 col-form-label">Nama Barang dan persediaan barang</label>
+                                        <div class="col-sm-6">
+                                            <select required class="form-control" name="id_persediaan_cadangan" id="id_persediaan_cadangan">
+                                                <option selected> ---------- Nama Barang dan persediaan barang---------- </option>
+                                                <?php foreach ($barang as $jb) : ?>
+                                                    <option value="<?= $jb->id_persediaan_cadangan ?>"><?= $jb->nama_barang  ?> - <?= $jb->persediaan_cadangan  ?> <?= $jb->nama_satuan  ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="id_satuan" class="col-sm-4 col-form-label">Satuan</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_satuan" id="id_satuan">
-                                                <option selected> ---------- Satuan ---------- </option>
-                                                <?php foreach ($satuan as $s) : ?>
-                                                    <option value="<?= $s->id_satuan ?>"><?= $s->nama_satuan ?></option>
-                                                <?php endforeach ?>
-                                            </select>
+                                        <label for="waktu_tunggu" class="col-sm-6 col-form-label">Waktu Tunggu (Hari)</label>
+                                        <div class="col-sm-6">
+                                            <input required type="text" class="form-control" id="waktu_tunggu" name="waktu_tunggu">
                                         </div>
                                     </div>
+                                    <div class="mb-3 row">
+                                        <label for="permintaan_rata_rata" class="col-sm-6 col-form-label">Permintaan Rata - Rata</label>
+                                        <div class="col-sm-6">
+                                            <input required type="text" class="form-control" id="permintaan_rata_rata" name="permintaan_rata_rata">
+                                        </div>
+                                    </div>
+
 
                                 </div>
                                 <div class="modal-footer">
@@ -115,24 +111,24 @@
                     className: "align-middle text-center small"
                 },
                 {
-                    "data": "id_barang",
-                    className: "align-middle small"
-                },
-                {
                     "data": "nama_barang",
                     className: "align-middle small"
                 },
                 {
-                    "data": "nama_jenis_barang",
+                    "data": "waktu_tunggu",
                     className: "align-middle small"
                 },
                 {
-                    "data": "nama_satuan",
-                    className: "align-middle text-center small"
+                    "data": "permintaan_rata_rata",
+                    className: "align-middle  small"
                 },
                 {
-                    "data": "stok",
-                    className: "align-middle text-center small"
+                    "data": "persediaan_cadangan",
+                    className: "align-middle  small"
+                },
+                {
+                    "data": "titik_pemesanan_kembali",
+                    className: "align-middle  small"
                 }
             ]
         });
@@ -164,8 +160,8 @@
 
             // mengambil data 
             $(fm).deserialize(data)
-            $(fm + ' [name=id_jenis_barang]').val(data.id_jenis_barang);
-            $(fm + ' [name=id_satuan]').val(data.id_satuan);
+            $(fm + ' [name=id_persediaan_cadangan]').val(data.id_pemesanan_cadangan);
+
 
             // setting title modal
             $("#ModalLabel").html("Ubah")
@@ -180,7 +176,7 @@
         let idx = getSelectedRowDataTables(dt);
         if (idx) {
             let data = dt.row(idx.row).data();
-            let dv = data.id_barang
+            let dv = data.id_rop
             let value = {
                 id: dv
             }
