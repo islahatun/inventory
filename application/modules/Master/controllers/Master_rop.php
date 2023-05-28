@@ -31,7 +31,7 @@ class Master_rop extends CI_Controller
                 'nama_barang'         => $di->nama_barang,
                 'titik_pemesanan_kembali'         => $di->titik_pemesanan_kembali,
                 'waktu_tunggu'         => $di->waktu_tunggu,
-                'permintaan_rata_rata'       => $di->permintaan_rata_rata,
+                'permintaan_rata_rata'       => $di->permintaan_rata_rata . ' ' . $di->nama_satuan,
                 'persediaan_cadangan'       => $di->persediaan_cadangan . ' ' . $di->nama_satuan,
                 'id_persediaan_cadangan'       => $di->id_persediaan_cadangan,
             );

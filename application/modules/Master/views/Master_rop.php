@@ -28,7 +28,7 @@
                                 <th scope="col" class="text-center">Waktu Tunggu (Hari)</th>
                                 <th scope="col" class="text-center">Permintaan Rata-rata</th>
                                 <th scope="col" class="text-center">Persediaan Cadangan</th>
-                                <th scope="col" class="text-center">ROP</th>
+                                <th scope="col" class="text-center">ROP (Hari)</th>
                             </tr>
                         </thead>
                         <tbody>
