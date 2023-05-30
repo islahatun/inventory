@@ -4,24 +4,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Dashboard extends CI_Controller
 {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     *	- or -
-     * 		http://example.com/index.php/welcome/index
-     *	- or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see https://codeigniter.com/userguide3/general/urls.html
-     */
+    public function __construct()
+    {
+
+        parent::__construct();
+        $this->load->model('Dashboard_model');
+    }
+
     public function index()
     {
-        $data['content_overview'] = $this->load->view('Dashboard', true);
+        $bulan = date('m');
+        $data['barang_masuk'] = $this->Dashboard_model->data_barang_masuk($bulan);
+        $data['barang_keluar'] = $this->Dashboard_model->data_barang_keluar($bulan);
+
+        $ss = $this->Dashboard_model->data_barang_sefty_stock();
+        foreach ($ss as $s) {
+            if ($s->stok < $s->persediaan_cadangan) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Stok 
+                <strong>' . $s->nama_barang . '!</strong> berjumlah ' . $s->stok . ' kurang dari persediaan cadangan
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>');
+            }
+        }
+        $data['content_overview'] = $this->load->view('Dashboard', $data, true);
         $this->load->view('_parent/overview', $data);
     }
 }

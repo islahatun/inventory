@@ -8,16 +8,19 @@
             <div class="card">
                 <div class="card-body mt-3">
 
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="create(this)">
-                        Tambah
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm mb-3" onclick="Edit(this)">
-                        Ubah
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="Delete(this)">
-                        Hapus
-                    </button>
+                    <form action="">
+                        <div class="mb-3 row">
+                            <div class="col-sm-4">
+                                <input required placeholder="Tanggal Mulai" type="date" class="form-control" id="date_from" name="date_from">
+                            </div>
+                            <div class="col-sm-4">
+                                <input required placeholder=" Tanggal Selesai   " type="date" class="form-control" id="date_to" name="date_to">
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn bt-primary">Print</button>
+                            </div>
+                        </div>
+                    </form>
 
                     <!-- Default Table -->
                     <table class="table table-responsive-sm" id="dt">
@@ -28,7 +31,7 @@
                                 <th scope="col" class="text-center">Nama Barang</th>
                                 <th scope="col" class="text-center">Jenis Barang</th>
                                 <th scope="col" class="text-center">Satuan Barang</th>
-                                <!-- <th scope="col" class="text-center">Stok Barang</th> -->
+                                <th scope="col" class="text-center">Stok Barang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,6 +131,10 @@
                 },
                 {
                     "data": "nama_satuan",
+                    className: "align-middle text-center small"
+                },
+                {
+                    "data": "stok",
                     className: "align-middle text-center small"
                 }
             ]

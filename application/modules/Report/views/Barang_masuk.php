@@ -8,27 +8,31 @@
             <div class="card">
                 <div class="card-body mt-3">
 
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="create(this)">
-                        Tambah
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm mb-3" onclick="Edit(this)">
-                        Ubah
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm mb-3" onclick="Delete(this)">
-                        Hapus
-                    </button>
+                    <form action="">
+                        <div class="mb-3 row">
+                            <div class="col-sm-4">
+                                <input required placeholder="Tanggal Mulai" type="date" class="form-control" id="date_from" name="date_from">
+                            </div>
+                            <div class="col-sm-4">
+                                <input required placeholder=" Tanggal Selesai   " type="date" class="form-control" id="date_to" name="date_to">
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary">Print</button>
+                            </div>
+                        </div>
+                    </form>
 
                     <!-- Default Table -->
                     <table class="table table-responsive-sm" id="dt">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Kode Barang</th>
+                                <th scope="col" class="text-center">Id Transaksi</th>
+                                <th scope="col" class="text-center">Id Barang</th>
                                 <th scope="col" class="text-center">Nama Barang</th>
-                                <th scope="col" class="text-center">Jenis Barang</th>
-                                <th scope="col" class="text-center">Satuan Barang</th>
-                                <!-- <th scope="col" class="text-center">Stok Barang</th> -->
+                                <th scope="col" class="text-center">Tanggal Masuk</th>
+                                <th scope="col" class="text-center">Jumlah Barang masuk</th>
+                                <th scope="col" class="text-center">Diinput Oleh</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,33 +51,30 @@
                             </div>
                             <form id="fm" action="" enctype="multipart/form-data" method="post">
                                 <div class="modal-body">
-                                    <input type="hidden" name="id_barang" id="">
+                                    <input type="hidden" name="id_trans_masuk" id="">
+                                    <input type="hidden" name="stok_masuk_current" id="">
                                     <div class="mb-3 row">
-                                        <label for="nama_barang" class="col-sm-4 col-form-label">Nama Barang</label>
+                                        <label for="id_barang" class="col-sm-4 col-form-label">Nama Barang</label>
                                         <div class="col-sm-8">
-                                            <input required type="text" class="form-control" id="nama_barang" name="nama_barang">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="id_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_jenis_barang" id="id_jenis_barang">
-                                                <option selected> ---------- Jenis Barang ---------- </option>
-                                                <?php foreach ($jenis_barang as $jb) : ?>
-                                                    <option value="<?= $jb->id_jenis_barang ?>"><?= $jb->nama_jenis_barang ?></option>
+                                            <select required class="form-control" name="id_barang" id="id_barang">
+                                                <option selected> ---------- Barang ---------- </option>
+                                                <?php foreach ($barang as $b) : ?>
+                                                    <option value="<?= $b->id_barang ?>"><?= $b->nama_barang ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="id_satuan" class="col-sm-4 col-form-label">Satuan</label>
+                                        <label for="tanggal_masuk" class="col-sm-4 col-form-label">Tanggal Masuk</label>
                                         <div class="col-sm-8">
-                                            <select required class="form-control" name="id_satuan" id="id_satuan">
-                                                <option selected> ---------- Satuan ---------- </option>
-                                                <?php foreach ($satuan as $s) : ?>
-                                                    <option value="<?= $s->id_satuan ?>"><?= $s->nama_satuan ?></option>
-                                                <?php endforeach ?>
-                                            </select>
+                                            <input required type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="stok_masuk" class="col-sm-4 col-form-label">Jumlah Barang</label>
+                                        <div class="col-sm-8">
+                                            <input required type="number" class="form-control" id="stok_masuk" name="stok_masuk">
                                         </div>
                                     </div>
 
@@ -115,6 +116,10 @@
                     className: "align-middle text-center small"
                 },
                 {
+                    "data": "id_trans_masuk",
+                    className: "align-middle small"
+                },
+                {
                     "data": "id_barang",
                     className: "align-middle small"
                 },
@@ -123,11 +128,15 @@
                     className: "align-middle small"
                 },
                 {
-                    "data": "nama_jenis_barang",
+                    "data": "tanggal_masuk",
                     className: "align-middle small"
                 },
                 {
-                    "data": "nama_satuan",
+                    "data": "stok_masuk",
+                    className: "align-middle text-center small"
+                },
+                {
+                    "data": "username",
                     className: "align-middle text-center small"
                 }
             ]
@@ -160,8 +169,7 @@
 
             // mengambil data 
             $(fm).deserialize(data)
-            $(fm + ' [name=id_jenis_barang]').val(data.id_jenis_barang);
-            $(fm + ' [name=id_satuan]').val(data.id_satuan);
+            $(fm + ' [name=id_barang]').val(data.id_barang);
 
             // setting title modal
             $("#ModalLabel").html("Ubah")
@@ -176,7 +184,7 @@
         let idx = getSelectedRowDataTables(dt);
         if (idx) {
             let data = dt.row(idx.row).data();
-            let dv = data.id_barang
+            let dv = data.id_trans_masuk
             let value = {
                 id: dv
             }

@@ -28,7 +28,7 @@
                                 <th scope="col" class="text-center">Nama Barang</th>
                                 <th scope="col" class="text-center">Jenis Barang</th>
                                 <th scope="col" class="text-center">Satuan Barang</th>
-                                <!-- <th scope="col" class="text-center">Stok Barang</th> -->
+                                <th scope="col" class="text-center">Stok Barang</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,6 +128,10 @@
                 },
                 {
                     "data": "nama_satuan",
+                    className: "align-middle text-center small"
+                },
+                {
+                    "data": "stok",
                     className: "align-middle text-center small"
                 }
             ]

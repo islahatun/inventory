@@ -1,33 +1,28 @@
-<main id="main" class="main">
-
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-6">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Example Card</h5>
-                        <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
-                    </div>
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+</div><!-- End Page Title -->
+<?= $this->session->flashdata('message') ?>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Jumlah Barang Masuk (<?= date('M') ?>)</h5>
+                    <p class="text-center"><?= $barang_masuk->stok_masuk ?></p>
                 </div>
-
             </div>
 
-            <div class="col-lg-6">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Example Card</h5>
-                        <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
-                    </div>
-                </div>
-
-            </div>
         </div>
-    </section>
 
-</main><!-- End #main -->
+        <div class="col-lg-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Jumlah Barang Keluar (<?= date('M') ?>)</h5>
+                    <p class="text-center"><?= $barang_keluar->stok_keluar ?></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
