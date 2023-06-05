@@ -129,4 +129,17 @@ class Barang_keluar extends CI_Controller
     //     $mpdf->WriteHTML($data);
     //     $mpdf->Output();
     // }
+    public function exportPDF()
+    {
+        $date_from = $this->input->post('date_from');
+        $date_to = $this->input->post('date_to');
+        $data['date_from'] = $this->input->post('date_from');
+        $data['date_to'] = $this->input->post('date_to');
+        $data['barang'] = $this->Barang_keluar_model->get_barang_report($date_from, $date_to);
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->AddPage("L", "", "", "", "", "15", "15", "15", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
+        $content = $this->load->view('Barang_keluar_print', $data, $date_from, $date_to, TRUE);
+        $mpdf->WriteHTML($content);
+        $mpdf->Output();
+    }
 }

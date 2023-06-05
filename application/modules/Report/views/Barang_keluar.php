@@ -165,9 +165,6 @@
                 } else {
                     toastr.error(view.message);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                toastr.error('Data Gagal disimpan.');
             }
         });
     });
