@@ -13,7 +13,7 @@
     <h3>
         <center>
 
-            LAPORAN BARANG MASUK <?= $date_from ?> s/d <?= $date_to ?>
+            LAPORAN BARANG KELUAR <?= $date_from ?> s/d <?= $date_to ?>
         </center>
     </h3>
 
