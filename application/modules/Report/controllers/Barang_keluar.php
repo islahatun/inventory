@@ -138,7 +138,7 @@ class Barang_keluar extends CI_Controller
         $data['barang'] = $this->Barang_keluar_model->get_barang_report($date_from, $date_to);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->AddPage("L", "", "", "", "", "15", "15", "15", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
-        $content = $this->load->view('Barang_keluar_print', $data, $date_from, $date_to, TRUE);
+        $content = $this->load->view('Barang_keluar_print', $data, TRUE);
         $mpdf->WriteHTML($content);
         $mpdf->Output();
     }

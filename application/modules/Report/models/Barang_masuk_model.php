@@ -54,4 +54,13 @@ class Barang_masuk_model extends CI_Model
         $this->db->where('id_trans_masuk', $where);
         $this->db->delete('trans_barang_masuk');
     }
+    public function get_barang_report($date_from, $date_to)
+    {
+        $this->db->select('*');
+        $this->db->from('trans_barang_masuk_vd');
+        $this->db->where('tanggal_masuk >=', $date_from);
+        $this->db->where('tanggal_masuk <=', $date_to);
+        $result = $this->db->get()->result();
+        return $result;
+    }
 }

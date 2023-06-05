@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body mt-3">
 
-                    <form action="">
+                    <form action="" method="post">
                         <div class="mb-3 row">
                             <div class="col-sm-4">
                                 <input required placeholder="Tanggal Mulai" type="date" class="form-control" id="date_from" name="date_from">
@@ -17,7 +17,7 @@
                                 <input required placeholder=" Tanggal Selesai   " type="date" class="form-control" id="date_to" name="date_to">
                             </div>
                             <div class="col-sm-4">
-                                <button class="btn btn-primary">Print</button>
+                                <button class="btn btn-primary" type="submit">Print</button>
                             </div>
                         </div>
                     </form>
@@ -41,52 +41,6 @@
                     <!-- End Default Table Example -->
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="ModalLabel"></h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form id="fm" action="" enctype="multipart/form-data" method="post">
-                                <div class="modal-body">
-                                    <input type="hidden" name="id_trans_masuk" id="">
-                                    <input type="hidden" name="stok_masuk_current" id="">
-                                    <div class="mb-3 row">
-                                        <label for="id_barang" class="col-sm-4 col-form-label">Nama Barang</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_barang" id="id_barang">
-                                                <option selected> ---------- Barang ---------- </option>
-                                                <?php foreach ($barang as $b) : ?>
-                                                    <option value="<?= $b->id_barang ?>"><?= $b->nama_barang ?></option>
-                                                <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="tanggal_masuk" class="col-sm-4 col-form-label">Tanggal Masuk</label>
-                                        <div class="col-sm-8">
-                                            <input required type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk">
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label for="stok_masuk" class="col-sm-4 col-form-label">Jumlah Barang</label>
-                                        <div class="col-sm-8">
-                                            <input required type="number" class="form-control" id="stok_masuk" name="stok_masuk">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -220,7 +174,7 @@
     $("form").submit(function(e) {
         e.preventDefault();
         $.ajax({
-            url: formUrl,
+            url: _url.concat('/exportPDF'),
             type: 'post',
             data: $(this).serialize(),
             success: function(data, textStatus, jqXHR) {
@@ -237,13 +191,7 @@
                     toastr.error(view.message);
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                toastr.error('Data Gagal disimpan.');
-            }
+
         });
     });
-
-    function clearText() {
-
-    }
 </script>
