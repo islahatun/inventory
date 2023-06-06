@@ -11,13 +11,7 @@
                     <form action="">
                         <div class="mb-3 row">
                             <div class="col-sm-4">
-                                <input required placeholder="Tanggal Mulai" type="date" class="form-control" id="date_from" name="date_from">
-                            </div>
-                            <div class="col-sm-4">
-                                <input required placeholder=" Tanggal Selesai   " type="date" class="form-control" id="date_to" name="date_to">
-                            </div>
-                            <div class="col-sm-4">
-                                <button class="btn bt-primary">Print</button>
+                                <button class="btn btn-primary" type="submit">Print</button>
                             </div>
                         </div>
                     </form>
@@ -40,55 +34,6 @@
                     <!-- End Default Table Example -->
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="ModalLabel"></h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form id="fm" action="" enctype="multipart/form-data" method="post">
-                                <div class="modal-body">
-                                    <input type="hidden" name="id_barang" id="">
-                                    <div class="mb-3 row">
-                                        <label for="nama_barang" class="col-sm-4 col-form-label">Nama Barang</label>
-                                        <div class="col-sm-8">
-                                            <input required type="text" class="form-control" id="nama_barang" name="nama_barang">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="id_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_jenis_barang" id="id_jenis_barang">
-                                                <option selected> ---------- Jenis Barang ---------- </option>
-                                                <?php foreach ($jenis_barang as $jb) : ?>
-                                                    <option value="<?= $jb->id_jenis_barang ?>"><?= $jb->nama_jenis_barang ?></option>
-                                                <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="id_satuan" class="col-sm-4 col-form-label">Satuan</label>
-                                        <div class="col-sm-8">
-                                            <select required class="form-control" name="id_satuan" id="id_satuan">
-                                                <option selected> ---------- Satuan ---------- </option>
-                                                <?php foreach ($satuan as $s) : ?>
-                                                    <option value="<?= $s->id_satuan ?>"><?= $s->nama_satuan ?></option>
-                                                <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -144,82 +89,12 @@
     });
 
 
-    function create() {
-        // reset form
-        $(fm).each(function() {
-            this.reset();
-        });
-        $('#Modal').modal('toggle');
-        $("#ModalLabel").html("Tambah")
-        formUrl = _url.concat('/save');
-    }
 
-    function Edit(obj) {
-
-        let idx = getSelectedRowDataTables(dt);
-
-        if (idx) {
-            let data = dt.row(idx.row).data();
-            // reset form
-            $(fm).each(function() {
-                this.reset();
-            });
-
-            // mengambil data 
-            $(fm).deserialize(data)
-            $(fm + ' [name=id_jenis_barang]').val(data.id_jenis_barang);
-            $(fm + ' [name=id_satuan]').val(data.id_satuan);
-
-            // setting title modal
-            $("#ModalLabel").html("Ubah")
-            // open modal
-            $('#Modal').modal('toggle');
-            formUrl = _url.concat('/edit');
-
-        }
-    }
-
-    function Delete() {
-        let idx = getSelectedRowDataTables(dt);
-        if (idx) {
-            let data = dt.row(idx.row).data();
-            let dv = data.id_barang
-            let value = {
-                id: dv
-            }
-            Swal.fire({
-                title: 'Apakah anda yakin.?',
-                text: "Data yang dihapus tidak dapat dikembalikan!",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: _url.concat('/delete'),
-                        data: value,
-                        cache: false,
-                        success: function(data, textStatus, jqXHR) {
-                            let table = $('#dt').DataTable();
-                            table.ajax.reload();
-                            toastr.success('Data sandi berhasil dihapus.');
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            toastr.error('Data sandi gagal dihapus.');
-                        }
-                    });
-                }
-            })
-
-        }
-    }
 
     $("form").submit(function(e) {
         e.preventDefault();
         $.ajax({
-            url: formUrl,
+            url: _url.concat('/exportPDF'),
             type: 'post',
             data: $(this).serialize(),
             success: function(data, textStatus, jqXHR) {
@@ -236,9 +111,7 @@
                     toastr.error(view.message);
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                toastr.error('Data Gagal disimpan.');
-            }
+
         });
     });
 

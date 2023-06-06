@@ -113,4 +113,15 @@ class Master_barang extends CI_Controller
 
         $this->Master_barang_model->delete($where);
     }
+    public function exportPDF()
+    {
+        $data['date_from'] = $this->input->post('date_from');
+        $data['date_to'] = $this->input->post('date_to');
+        $data['barang'] = $this->Master_barang_model->get_barang_report();
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->AddPage("L", "", "", "", "", "15", "15", "15", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
+        $content = $this->load->view('Master_barang_print', $data, TRUE);
+        $mpdf->WriteHTML($content);
+        $mpdf->Output();
+    }
 }

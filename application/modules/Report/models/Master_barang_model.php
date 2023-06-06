@@ -45,4 +45,11 @@ class Master_barang_model extends CI_Model
         $this->db->where('id_barang', $where);
         $this->db->delete('tbl_barang');
     }
+    public function get_barang_report()
+    {
+        $this->db->select('*');
+        $this->db->from('barang_vd');
+        $result = $this->db->get()->result();
+        return $result;
+    }
 }
