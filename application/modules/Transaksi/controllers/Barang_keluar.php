@@ -19,7 +19,7 @@ class Barang_keluar extends CI_Controller
     }
     public function datalist()
     {
-        $list = $this->Barang_keluar_model->dataList();
+        $list = $this->Barang_keluar_model->dataList($this->session->userdata('id'));
         $rtn = array();
         $i = 1;
 

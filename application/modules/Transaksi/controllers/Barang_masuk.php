@@ -19,7 +19,7 @@ class Barang_masuk extends CI_Controller
     }
     public function datalist()
     {
-        $list = $this->Barang_masuk_model->dataList();
+        $list = $this->Barang_masuk_model->dataList($this->session->userdata('id'));
         $rtn = array();
         $i = 1;
 

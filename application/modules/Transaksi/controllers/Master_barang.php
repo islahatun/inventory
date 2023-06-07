@@ -20,7 +20,7 @@ class Master_barang extends CI_Controller
     }
     public function datalist()
     {
-        $list = $this->Master_barang_model->dataList();
+        $list = $this->Master_barang_model->dataList($this->session->userdata('id'));
         $rtn = array();
         $i = 1;
 
