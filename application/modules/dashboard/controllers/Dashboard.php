@@ -20,8 +20,13 @@ class Dashboard extends CI_Controller
         $ss = $this->Dashboard_model->data_barang_sefty_stock();
         foreach ($ss as $s) {
             if ($s->stok < $s->persediaan_cadangan) {
+                if ($s->stok < 0) {
+                    $stok = 0;
+                } else {
+                    $stok = $s->stok;
+                }
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Stok 
-                <strong>' . $s->nama_barang . '!</strong> berjumlah ' . $s->stok . ' kurang dari persediaan cadangan
+                <strong>' . $s->nama_barang . '!</strong> berjumlah ' . $stok . ' kurang dari persediaan cadangan
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>');
             }

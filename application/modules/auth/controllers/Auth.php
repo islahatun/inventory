@@ -22,15 +22,16 @@ class Auth extends CI_Controller
         if ($row->num_rows() > 0) {
             $hasil = $row->row();
             if (password_verify($password, $hasil->password)) {
-                if ($hasil->active == 1) {
+                if ($hasil->active == 'Y') {
                     $data = [
                         'id' => $hasil->id,
                         'username' => $hasil->username,
                         'group_id' => $hasil->group_id
                     ];
                     $this->session->set_userdata($data);
-                    $data['content_overview'] = $this->load->view('Dashboard', true);
-                    $this->load->view('_parent/overview', $data);
+                    redirect('Dashboard');
+                    // $data['content_overview'] = $this->load->view('Dashboard/Dashboard', true);
+                    // $this->load->view('_parent/overview', $data);
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun sudah tidak aktif !</div>'); //Kirim message ke form login 
                     redirect('Auth');
@@ -48,10 +49,9 @@ class Auth extends CI_Controller
     }
     function logout()
     {
-        $this->session->unset_userdata('idUser');
-        $this->session->unset_userdata('nik');
+        $this->session->unset_userdata('id');
         $this->session->unset_userdata('group_id');
-        $this->session->unset_userdata('name');
+        $this->session->unset_userdata('username');
 
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda telah logout. </div>');
         redirect('auth/index');

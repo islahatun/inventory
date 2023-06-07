@@ -53,7 +53,7 @@ class Master_rop extends CI_Controller
             'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
             'persediaan_cadangan' => $ss->persediaan_cadangan,
             'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
+            'created_by' => $this->session->userdata('id')
         );
         $result =  $this->Master_rop_model->save($data);
 
@@ -85,6 +85,7 @@ class Master_rop extends CI_Controller
             'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
             'persediaan_cadangan' => $this->input->post('persediaan_cadangan'),
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
         $result =  $this->Master_rop_model->edit($data);
         if ($result) {

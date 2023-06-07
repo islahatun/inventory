@@ -46,7 +46,7 @@ class Master_satuan extends CI_Controller
             $data = array(
                 'nama_satuan' => $this->input->post('nama_satuan'),
                 'created_date' => date('y-m-d'),
-                // 'created_by' => $this->session->userdata('idUser')
+                'created_by' => $this->session->userdata('id')
             );
             $result =  $this->Master_satuan_model->save($data);
 
@@ -72,6 +72,7 @@ class Master_satuan extends CI_Controller
             'id_satuan' => $this->input->post('id_satuan'),
             'nama_satuan' => $this->input->post('nama_satuan'),
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
         $result =  $this->Master_satuan_model->edit($data);
         if ($result) {

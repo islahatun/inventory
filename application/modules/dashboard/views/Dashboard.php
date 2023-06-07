@@ -8,7 +8,12 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Barang Masuk (<?= date('M') ?>)</h5>
-                    <p class="text-center"><?= $barang_masuk->stok_masuk ?></p>
+                    <p class="text-center">
+                        <?php if ($barang_masuk == null) { ?>
+                            0</p>
+                <?php } else { ?>
+                    <?= $barang_masuk->stok_masuk ?></p>
+                <?php } ?>
                 </div>
             </div>
 
@@ -19,7 +24,11 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Barang Keluar (<?= date('M') ?>)</h5>
-                    <p class="text-center"><?= $barang_keluar->stok_keluar ?></p>
+                    <p class="text-center"><?php if ($barang_keluar == null) { ?>
+                            0</p>
+                <?php } else { ?>
+                    <?= $barang_keluar->stok_keluar ?></p>
+                <?php } ?></p>
                 </div>
             </div>
 

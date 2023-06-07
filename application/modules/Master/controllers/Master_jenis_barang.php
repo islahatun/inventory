@@ -46,7 +46,7 @@ class Master_jenis_barang extends CI_Controller
             $data = array(
                 'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
                 'created_date' => date('y-m-d'),
-                // 'created_by' => $this->session->userdata('idUser')
+                'created_by' => $this->session->userdata('id')
             );
             $result =  $this->Master_jenis_barang_model->save($data);
 
@@ -72,6 +72,7 @@ class Master_jenis_barang extends CI_Controller
             'id_jenis_barang' => $this->input->post('id_jenis_barang'),
             'nama_jenis_barang' => $this->input->post('nama_jenis_barang'),
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
         $result =  $this->Master_jenis_barang_model->edit($data);
         if ($result) {

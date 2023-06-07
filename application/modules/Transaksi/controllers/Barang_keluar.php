@@ -53,7 +53,7 @@ class Barang_keluar extends CI_Controller
         // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
         // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
         // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-        $huruf = "TRS-" . $date;
+        $huruf = "TRSK-" . $date;
         $id_trans_keluar = $huruf . sprintf("%05s", $urutan);
 
 
@@ -63,7 +63,7 @@ class Barang_keluar extends CI_Controller
             'tanggal_keluar' => $this->input->post('tanggal_keluar'),
             'stok_keluar' => $this->input->post('stok_keluar'),
             'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
+            'created_by' => $this->session->userdata('id')
         );
         $result =  $this->Barang_keluar_model->save($data);
 
@@ -93,6 +93,7 @@ class Barang_keluar extends CI_Controller
             'tanggal_keluar' => $this->input->post('tanggal_keluar'),
             'stok_keluar' => $this->input->post('stok_keluar'),
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
 
         $data_barang = [

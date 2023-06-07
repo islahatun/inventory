@@ -49,7 +49,7 @@ class Master_sefty_stock extends CI_Controller
             'id_barang' => $this->input->post('id_barang'),
             'persediaan_cadangan' => $ss,
             'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
+            'created_by' => $this->session->userdata('id')
         );
         $result =  $this->Master_sefty_stock_model->save($data);
 
@@ -78,6 +78,7 @@ class Master_sefty_stock extends CI_Controller
             'pengambilan_harian_maximum' => $this->input->post('pengambilan_harian_maximum'),
             'persediaan_cadangan' => $ss,
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
         $result =  $this->Master_sefty_stock_model->edit($data);
         if ($result) {

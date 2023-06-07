@@ -43,6 +43,7 @@ class Barang_masuk extends CI_Controller
     }
     public function save()
     {
+
         // mengambil data sesuai jumlah row
         $max = $this->Barang_masuk_model->get_max_id();
 
@@ -53,7 +54,7 @@ class Barang_masuk extends CI_Controller
         // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
         // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
         // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
-        $huruf = "TRS-" . $date;
+        $huruf = "TRSM-" . $date;
         $id_trans_masuk = $huruf . sprintf("%05s", $urutan);
 
 
@@ -63,7 +64,7 @@ class Barang_masuk extends CI_Controller
             'tanggal_masuk' => $this->input->post('tanggal_masuk'),
             'stok_masuk' => $this->input->post('stok_masuk'),
             'created_date' => date('y-m-d'),
-            // 'created_by' => $this->session->userdata('idUser')
+            'created_by' => $this->session->userdata('id')
         );
         $result =  $this->Barang_masuk_model->save($data);
 
@@ -93,6 +94,7 @@ class Barang_masuk extends CI_Controller
             'tanggal_masuk' => $this->input->post('tanggal_masuk'),
             'stok_masuk' => $this->input->post('stok_masuk'),
             'update_date' => date('y-m-d'),
+            'update_by' => $this->session->userdata('id')
         ];
 
         $data_barang = [
