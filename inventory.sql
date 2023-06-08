@@ -11,7 +11,7 @@
  Target Server Version : 100424 (10.4.24-MariaDB)
  File Encoding         : 65001
 
- Date: 08/06/2023 13:44:11
+ Date: 08/06/2023 14:59:03
 */
 
 SET NAMES utf8mb4;
@@ -244,7 +244,7 @@ CREATE TABLE `tbl_users`  (
 -- Records of tbl_users
 -- ----------------------------
 INSERT INTO `tbl_users` VALUES (7, 'iis2', 'saa', '$2y$10$uiUfiDL7Njibko7ra7O2WORkCrLcI6pVGYal.JKd/EJaTHEwoVMTu', 'Y', NULL, 0, '2023-05-20 00:00:00', NULL);
-INSERT INTO `tbl_users` VALUES (10, 'produksi', 'produksi', '$2y$10$Tfno1jtWQ1a1mcyLkNU/rerCsMbwV56zmfweYAHdfmYAc.94Kfz7y', 'Y', NULL, 1, '2023-05-20 00:00:00', NULL);
+INSERT INTO `tbl_users` VALUES (10, 'produksi', 'produksi', '$2y$10$i9kmPA/rBAlWMJUe.LDayOyrN20kv1f38vyh7AC/f8qIZZByvgHqu', 'Y', NULL, 1, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (12, 'manajer produksi', 'manajer produksi', '$2y$10$4iw5a9oD2Gv1TJWB3sY19OgS6cGCkjYz4kkpogXw.VCEvqySSXjGu', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (13, 'kita cobalagi ya', 'iis', '$2y$10$WpLkqh/467ZgaKkF8S1mH.zKp1TAfEaolSfLfoKZSfSd1mEBMxQ7S', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (14, 'produksi2', 'produksi2', '$2y$10$udQVA0EovYCATzv8LeMz8.51hx5d3zAth0vstS8.Y1NeaG5alQhJi', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);

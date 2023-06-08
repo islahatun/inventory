@@ -229,7 +229,7 @@
                 id: idx
             }
             Swal.fire({
-                title: 'Apakah anda yakin.? katasandi akan diubah menjadi 123456',
+                title: 'Apakah anda yakin.? katasandi akan diubah menjadi Password',
                 text: "Password yang di reset tidak dapat dikembalikan!",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
