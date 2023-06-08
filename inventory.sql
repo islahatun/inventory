@@ -11,7 +11,7 @@
  Target Server Version : 100424 (10.4.24-MariaDB)
  File Encoding         : 65001
 
- Date: 29/05/2023 01:11:06
+ Date: 08/06/2023 13:44:11
 */
 
 SET NAMES utf8mb4;
@@ -37,8 +37,55 @@ CREATE TABLE `tbl_barang`  (
 -- ----------------------------
 -- Records of tbl_barang
 -- ----------------------------
-INSERT INTO `tbl_barang` VALUES ('BRG00003', 'sasas', 4, 4, 33, '2023-05-20 00:00:00', NULL, NULL, NULL);
-INSERT INTO `tbl_barang` VALUES ('BRG002', 'nama barang ahaa', 2, 2, 0, '2023-05-20 00:00:00', NULL, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00003', 'sasas', 4, 4, 44, '2023-05-20 00:00:00', NULL, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG002', 'nama barang ahaa', 2, 2, -26, '2023-05-20 00:00:00', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for tbl_group
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_group`;
+CREATE TABLE `tbl_group`  (
+  `group_id` int NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`group_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tbl_group
+-- ----------------------------
+INSERT INTO `tbl_group` VALUES (1, 'Administrator');
+INSERT INTO `tbl_group` VALUES (2, 'Produksi');
+INSERT INTO `tbl_group` VALUES (3, 'Manager');
+
+-- ----------------------------
+-- Table structure for tbl_group_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_group_menu`;
+CREATE TABLE `tbl_group_menu`  (
+  `group_id` int NOT NULL,
+  `menu_id` int NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tbl_group_menu
+-- ----------------------------
+INSERT INTO `tbl_group_menu` VALUES (1, 1);
+INSERT INTO `tbl_group_menu` VALUES (1, 2);
+INSERT INTO `tbl_group_menu` VALUES (1, 3);
+INSERT INTO `tbl_group_menu` VALUES (1, 4);
+INSERT INTO `tbl_group_menu` VALUES (1, 5);
+INSERT INTO `tbl_group_menu` VALUES (1, 6);
+INSERT INTO `tbl_group_menu` VALUES (1, 7);
+INSERT INTO `tbl_group_menu` VALUES (1, 8);
+INSERT INTO `tbl_group_menu` VALUES (2, 9);
+INSERT INTO `tbl_group_menu` VALUES (2, 10);
+INSERT INTO `tbl_group_menu` VALUES (2, 11);
+INSERT INTO `tbl_group_menu` VALUES (2, 12);
+INSERT INTO `tbl_group_menu` VALUES (2, 13);
+INSERT INTO `tbl_group_menu` VALUES (2, 14);
+INSERT INTO `tbl_group_menu` VALUES (3, 12);
+INSERT INTO `tbl_group_menu` VALUES (3, 13);
+INSERT INTO `tbl_group_menu` VALUES (3, 14);
 
 -- ----------------------------
 -- Table structure for tbl_group_user
@@ -83,17 +130,32 @@ INSERT INTO `tbl_jenis_barang` VALUES (4, 'pewangi', '2023-05-20 00:00:00', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_menu`;
 CREATE TABLE `tbl_menu`  (
-  `id_menu` int NOT NULL AUTO_INCREMENT,
-  `parent` int NOT NULL,
-  `group_user` int NULL DEFAULT NULL,
-  `name_menu` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `link_menu` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_menu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `menu_id` int NOT NULL AUTO_INCREMENT,
+  `parent` int NULL DEFAULT NULL,
+  `menu_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `link` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `active` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'Y',
+  `sort` int NULL DEFAULT NULL,
+  PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_menu
 -- ----------------------------
+INSERT INTO `tbl_menu` VALUES (1, 0, 'Administrasi', 'Administrasi', 'Y', 1);
+INSERT INTO `tbl_menu` VALUES (2, 1, 'Master User', 'Administrasi/Master_user', 'Y', 2);
+INSERT INTO `tbl_menu` VALUES (3, 0, 'Master', 'Master', 'Y', 2);
+INSERT INTO `tbl_menu` VALUES (4, 3, 'Master Barang', 'Master/Master_barang', 'Y', 5);
+INSERT INTO `tbl_menu` VALUES (5, 3, 'Master Jenis Barang', 'Master/Master_jenis_barang', 'Y', 4);
+INSERT INTO `tbl_menu` VALUES (6, 3, 'Master Satuan', 'Master/Master_satuan', 'Y', 3);
+INSERT INTO `tbl_menu` VALUES (7, 3, 'Persedian cadangan', 'Master/Master_sefty_stock', 'Y', 6);
+INSERT INTO `tbl_menu` VALUES (8, 3, 'Master ROP', 'Master/Master_rop', 'Y', 7);
+INSERT INTO `tbl_menu` VALUES (9, 0, 'Transaksi', 'Transaksi', 'Y', 1);
+INSERT INTO `tbl_menu` VALUES (10, 9, 'Barang Masuk', 'Transaksi/Barang_masuk', 'Y', 2);
+INSERT INTO `tbl_menu` VALUES (11, 9, 'Barang Keluar', 'Transaksi/Barang_keluar', 'Y', 3);
+INSERT INTO `tbl_menu` VALUES (12, 0, 'Laporan', 'Report', 'Y', 1);
+INSERT INTO `tbl_menu` VALUES (13, 12, 'Laporan Barang Masuk', 'Report/Barang_masuk', 'Y', 2);
+INSERT INTO `tbl_menu` VALUES (14, 12, 'Laporan Barang Keluar', 'Report/Barang_keluar', 'Y', 3);
 
 -- ----------------------------
 -- Table structure for tbl_rop
@@ -182,7 +244,7 @@ CREATE TABLE `tbl_users`  (
 -- Records of tbl_users
 -- ----------------------------
 INSERT INTO `tbl_users` VALUES (7, 'iis2', 'saa', '$2y$10$uiUfiDL7Njibko7ra7O2WORkCrLcI6pVGYal.JKd/EJaTHEwoVMTu', 'Y', NULL, 0, '2023-05-20 00:00:00', NULL);
-INSERT INTO `tbl_users` VALUES (10, 'produksi', 'produksi', '$2y$10$Tfno1jtWQ1a1mcyLkNU/rerCsMbwV56zmfweYAHdfmYAc.94Kfz7y', 'Y', NULL, 3, '2023-05-20 00:00:00', NULL);
+INSERT INTO `tbl_users` VALUES (10, 'produksi', 'produksi', '$2y$10$Tfno1jtWQ1a1mcyLkNU/rerCsMbwV56zmfweYAHdfmYAc.94Kfz7y', 'Y', NULL, 1, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (12, 'manajer produksi', 'manajer produksi', '$2y$10$4iw5a9oD2Gv1TJWB3sY19OgS6cGCkjYz4kkpogXw.VCEvqySSXjGu', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (13, 'kita cobalagi ya', 'iis', '$2y$10$WpLkqh/467ZgaKkF8S1mH.zKp1TAfEaolSfLfoKZSfSd1mEBMxQ7S', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);
 INSERT INTO `tbl_users` VALUES (14, 'produksi2', 'produksi2', '$2y$10$udQVA0EovYCATzv8LeMz8.51hx5d3zAth0vstS8.Y1NeaG5alQhJi', 'Y', NULL, 2, '2023-05-20 00:00:00', NULL);
@@ -207,7 +269,8 @@ CREATE TABLE `trans_barang_keluar`  (
 -- ----------------------------
 -- Records of trans_barang_keluar
 -- ----------------------------
-INSERT INTO `trans_barang_keluar` VALUES ('TRS-23052200001', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 2, NULL, NULL);
+INSERT INTO `trans_barang_keluar` VALUES ('TRS-23052200001', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 7, NULL, NULL);
+INSERT INTO `trans_barang_keluar` VALUES ('TRS-23053000002', 'BRG002', '2023-05-30', 30, '2023-05-30 00:00:00', 7, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for trans_barang_masuk
@@ -228,9 +291,12 @@ CREATE TABLE `trans_barang_masuk`  (
 -- ----------------------------
 -- Records of trans_barang_masuk
 -- ----------------------------
-INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052000001', 'BRG00003', '2023-05-20', 6, '2023-05-20 00:00:00', NULL, NULL, NULL);
-INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200002', 'BRG00003', '2023-05-22', 2, '2023-05-22 00:00:00', 2, '2023-05-22 00:00:00', NULL);
-INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200003', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 2, '2023-05-22 00:00:00', NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052000001', 'BRG00003', '2023-05-20', 6, '2023-05-20 00:00:00', 7, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200002', 'BRG00003', '2023-05-22', 2, '2023-05-22 00:00:00', 10, '2023-05-22 00:00:00', NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23052200003', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 10, '2023-05-22 00:00:00', NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRS-23053000004', 'BRG00003', '2023-05-23', 3, '2023-05-30 00:00:00', 7, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSK-2306060000', 'BRG00003', '2023-06-06', 8, '2023-06-06 00:00:00', NULL, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSM-2306060000', 'BRG002', '2023-06-07', 4, '2023-06-06 00:00:00', 10, NULL, NULL);
 
 -- ----------------------------
 -- View structure for barang_vd
@@ -254,6 +320,48 @@ FROM
 	tbl_satuan
 	ON 
 		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
+
+-- ----------------------------
+-- View structure for dashboard_barang_keluar_vd
+-- ----------------------------
+DROP VIEW IF EXISTS `dashboard_barang_keluar_vd`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `dashboard_barang_keluar_vd` AS SELECT
+	trans_barang_keluar.id_trans_keluar, 
+	trans_barang_keluar.id_barang, 
+DATE_FORMAT(trans_barang_keluar.tanggal_keluar,'%m')	as bulan , 
+	sum(trans_barang_keluar.stok_keluar) as stok_keluar
+FROM
+	trans_barang_keluar 
+	GROUP BY DATE_FORMAT(trans_barang_keluar.tanggal_keluar,'%m') ;
+
+-- ----------------------------
+-- View structure for dashboard_barang_masuk_vd
+-- ----------------------------
+DROP VIEW IF EXISTS `dashboard_barang_masuk_vd`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `dashboard_barang_masuk_vd` AS SELECT
+	trans_barang_masuk.id_trans_masuk, 
+	trans_barang_masuk.id_barang, 
+	DATE_FORMAT(trans_barang_masuk.tanggal_masuk,'%m') as bulan,
+sum(trans_barang_masuk.stok_masuk) as  stok_masuk
+FROM
+	trans_barang_masuk 
+	GROUP BY DATE_FORMAT(trans_barang_masuk.tanggal_masuk,'%m') ;
+
+-- ----------------------------
+-- View structure for dashboard_barang_vd
+-- ----------------------------
+DROP VIEW IF EXISTS `dashboard_barang_vd`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `dashboard_barang_vd` AS SELECT
+	tbl_barang.id_barang, 
+	tbl_barang.nama_barang, 
+	tbl_barang.stok, 
+	tbl_sefty_stock.persediaan_cadangan
+FROM
+	tbl_barang
+	INNER JOIN
+	tbl_sefty_stock
+	ON 
+		tbl_barang.id_barang = tbl_sefty_stock.id_barang ;
 
 -- ----------------------------
 -- View structure for rop_vd
@@ -304,22 +412,52 @@ FROM
 		join tbl_satuan on tbl_satuan.id_satuan = tbl_barang.id_satuan ;
 
 -- ----------------------------
+-- View structure for sys_menu_vd
+-- ----------------------------
+DROP VIEW IF EXISTS `sys_menu_vd`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `sys_menu_vd` AS SELECT
+	tbl_group_menu.group_id, 
+	tbl_menu.menu_id, 
+	tbl_menu.parent, 
+	tbl_menu.menu_name, 
+	tbl_menu.link, 
+	tbl_menu.active, 
+	tbl_menu.sort
+FROM
+	tbl_menu
+	INNER JOIN
+	tbl_group_menu
+	ON 
+		tbl_menu.menu_id = tbl_group_menu.menu_id ;
+
+-- ----------------------------
 -- View structure for trans_barang_keluar_vd
 -- ----------------------------
 DROP VIEW IF EXISTS `trans_barang_keluar_vd`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `trans_barang_keluar_vd` AS SELECT
-	trans_barang_keluar.stok_keluar AS stok_keluar_current,
-	trans_barang_keluar.id_trans_keluar,
-	trans_barang_keluar.id_barang,
-	trans_barang_keluar.tanggal_keluar,
-	trans_barang_keluar.stok_keluar,
-	trans_barang_keluar.created_by,
-	tbl_barang.nama_barang,
-	tbl_users.`username` 
+	trans_barang_keluar.stok_keluar AS stok_keluar_current, 
+	trans_barang_keluar.id_trans_keluar, 
+	trans_barang_keluar.id_barang, 
+	trans_barang_keluar.tanggal_keluar, 
+	trans_barang_keluar.stok_keluar, 
+	trans_barang_keluar.created_by, 
+	tbl_barang.nama_barang, 
+	tbl_users.username, 
+	tbl_satuan.nama_satuan
 FROM
 	trans_barang_keluar
-	INNER JOIN tbl_barang ON trans_barang_keluar.id_barang = tbl_barang.id_barang
-	INNER JOIN tbl_users ON trans_barang_keluar.created_by = tbl_users.id ;
+	INNER JOIN
+	tbl_barang
+	ON 
+		trans_barang_keluar.id_barang = tbl_barang.id_barang
+	INNER JOIN
+	tbl_users
+	ON 
+		trans_barang_keluar.created_by = tbl_users.id
+	INNER JOIN
+	tbl_satuan
+	ON 
+		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
 
 -- ----------------------------
 -- View structure for trans_barang_masuk_vd
@@ -333,7 +471,8 @@ trans_barang_masuk.stok_masuk as stok_masuk_current,
 	trans_barang_masuk.stok_masuk, 
 	trans_barang_masuk.created_by, 
 	tbl_barang.nama_barang,
-	tbl_users.`username`
+	tbl_users.`username`,
+	tbl_satuan.nama_satuan
 FROM
 	trans_barang_masuk
 	INNER JOIN
@@ -343,7 +482,11 @@ FROM
 	INNER JOIN
 	tbl_users
 	ON 
-		trans_barang_masuk.created_by = tbl_users.id ;
+		trans_barang_masuk.created_by = tbl_users.id 
+		INNER JOIN
+	tbl_satuan
+	ON 
+		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
 
 -- ----------------------------
 -- View structure for user_vd

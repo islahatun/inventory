@@ -26,6 +26,7 @@ class Auth extends CI_Controller
                     $data = [
                         'id' => $hasil->id,
                         'username' => $hasil->username,
+                        'name' => $hasil->name,
                         'group_id' => $hasil->group_id
                     ];
                     $this->session->set_userdata($data);
@@ -52,6 +53,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('group_id');
         $this->session->unset_userdata('username');
+        $this->session->unset_userdata('name');
 
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda telah logout. </div>');
         redirect('auth/index');
