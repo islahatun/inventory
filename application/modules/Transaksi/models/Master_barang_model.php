@@ -11,7 +11,7 @@ class Master_barang_model extends CI_Model
 
     public function dataList($userId)
     {
-        $result = $this->db->get('barang_vd', ['created_by' => $userId])->result();
+        $result = $this->db->get_where('barang_vd', ['created_by' => $userId])->result();
         return $result;
     }
     public function get_max_id()

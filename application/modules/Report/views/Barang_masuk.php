@@ -28,10 +28,10 @@
                             <tr>
                                 <th scope="col" class="text-center">#</th>
                                 <th scope="col" class="text-center">Id Transaksi</th>
-                                <th scope="col" class="text-center">Id Barang</th>
-                                <th scope="col" class="text-center">Nama Barang</th>
+                                <th scope="col" class="text-center">Id Bahan</th>
+                                <th scope="col" class="text-center">Nama Bahan</th>
                                 <th scope="col" class="text-center">Tanggal Masuk</th>
-                                <th scope="col" class="text-center">Jumlah Barang masuk</th>
+                                <th scope="col" class="text-center">Jumlah Bahan masuk</th>
                                 <th scope="col" class="text-center">Diinput Oleh</th>
                             </tr>
                         </thead>

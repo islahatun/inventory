@@ -24,4 +24,9 @@ class Dashboard_model extends CI_Model
         $result =  $this->db->get_where('dashboard_barang_keluar_vd', array('bulan' => $bulan))->row();
         return $result;
     }
+    public function dataList()
+    {
+        $result = $this->db->get('sefty_stock_barang_vd')->result();
+        return $result;
+    }
 }

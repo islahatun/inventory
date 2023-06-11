@@ -13,7 +13,7 @@
     <h3>
         <center>
 
-            LAPORAN BARANG KELUAR <?= $date_from ?> s/d <?= $date_to ?>
+            LAPORAN Bahan KELUAR <?= $date_from ?> s/d <?= $date_to ?>
         </center>
     </h3>
 
@@ -22,10 +22,10 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Id Transaksi</th>
-                <th scope="col">Id Barang</th>
-                <th scope="col">Nama Barang</th>
+                <th scope="col">Id Bahan</th>
+                <th scope="col">Nama Bahan</th>
                 <th scope="col">Tanggal keluar</th>
-                <th scope="col">Jumlah Barang keluar</th>
+                <th scope="col">Jumlah Bahan keluar</th>
                 <th scope="col">Diinput Oleh</th>
             </tr>
         </thead>

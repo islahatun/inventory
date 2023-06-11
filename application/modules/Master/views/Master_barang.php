@@ -24,10 +24,10 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Kode Barang</th>
-                                <th scope="col" class="text-center">Nama Barang</th>
-                                <th scope="col" class="text-center">Jenis Barang</th>
-                                <th scope="col" class="text-center">Satuan Barang</th>
+                                <th scope="col" class="text-center">Kode Bahan</th>
+                                <th scope="col" class="text-center">Nama Bahan</th>
+                                <th scope="col" class="text-center">Jenis Bahan</th>
+                                <th scope="col" class="text-center">Satuan Bahan</th>
                                 <!-- <th scope="col" class="text-center">Stok Barang</th> -->
                             </tr>
                         </thead>
@@ -49,16 +49,16 @@
                                 <div class="modal-body">
                                     <input type="hidden" name="id_barang" id="">
                                     <div class="mb-3 row">
-                                        <label for="nama_barang" class="col-sm-4 col-form-label">Nama Barang</label>
+                                        <label for="nama_barang" class="col-sm-4 col-form-label">Nama Bahan</label>
                                         <div class="col-sm-8">
                                             <input required type="text" class="form-control" id="nama_barang" name="nama_barang">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="id_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
+                                        <label for="id_jenis_barang" class="col-sm-4 col-form-label">Jenis Bahan</label>
                                         <div class="col-sm-8">
                                             <select required class="form-control" name="id_jenis_barang" id="id_jenis_barang">
-                                                <option selected> ---------- Jenis Barang ---------- </option>
+                                                <option selected> ---------- Jenis Bahan ---------- </option>
                                                 <?php foreach ($jenis_barang as $jb) : ?>
                                                     <option value="<?= $jb->id_jenis_barang ?>"><?= $jb->nama_jenis_barang ?></option>
                                                 <?php endforeach ?>

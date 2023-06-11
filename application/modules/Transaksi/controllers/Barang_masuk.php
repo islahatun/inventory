@@ -21,6 +21,7 @@ class Barang_masuk extends CI_Controller
     {
         $list = $this->Barang_masuk_model->dataList($this->session->userdata('id'));
         $rtn = array();
+
         $i = 1;
 
         foreach ($list as $di) {

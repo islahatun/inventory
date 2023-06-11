@@ -21,11 +21,11 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Kode Barang</th>
-                                <th scope="col" class="text-center">Nama Barang</th>
-                                <th scope="col" class="text-center">Jenis Barang</th>
-                                <th scope="col" class="text-center">Satuan Barang</th>
-                                <th scope="col" class="text-center">Stok Barang</th>
+                                <th scope="col" class="text-center">Kode Bahan</th>
+                                <th scope="col" class="text-center">Nama Bahan</th>
+                                <th scope="col" class="text-center">Jenis Bahan</th>
+                                <th scope="col" class="text-center">Satuan Bahan</th>
+                                <th scope="col" class="text-center">Stok Bahan</th>
                             </tr>
                         </thead>
                         <tbody>

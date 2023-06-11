@@ -24,7 +24,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Jenis Barang</th>
+                                <th scope="col" class="text-center">Jenis Bahan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,7 @@
                                 <div class="modal-body">
                                     <input type="hidden" name="id_jenis_barang" id="">
                                     <div class="mb-3 row">
-                                        <label for="nama_jenis_barang" class="col-sm-4 col-form-label">Jenis Barang</label>
+                                        <label for="nama_jenis_barang" class="col-sm-4 col-form-label">Jenis Bahan</label>
                                         <div class="col-sm-8">
                                             <input required type="text" class="form-control" id="nama_jenis_barang" name="nama_jenis_barang">
                                         </div>

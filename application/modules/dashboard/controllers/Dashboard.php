@@ -34,4 +34,25 @@ class Dashboard extends CI_Controller
         $data['content_overview'] = $this->load->view('Dashboard', $data, true);
         $this->load->view('_parent/overview', $data);
     }
+    public function dataList()
+    {
+        $list = $this->Dashboard_model->dataList();
+        $rtn = array();
+        $i = 1;
+
+        foreach ($list as $di) {
+
+            $rtn[] = array(
+                'nomor'                 => $i,
+                'id_barang'         => $di->id_barang,
+                'nama_barang'         => $di->nama_barang,
+                'nama_jenis_barang'       => $di->nama_jenis_barang,
+                'persediaan_cadangan'       => $di->persediaan_cadangan,
+                'stok'       => $di->stok,
+            );
+            $i++;
+        }
+
+        echo json_encode($rtn);
+    }
 }

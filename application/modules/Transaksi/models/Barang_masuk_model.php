@@ -11,7 +11,8 @@ class Barang_masuk_model extends CI_Model
 
     public function dataList($userId)
     {
-        $result = $this->db->get('trans_barang_masuk_vd', ['created_by' => $userId])->result();
+        $result = $this->db->get_where('trans_barang_masuk_vd', array('created_by' => $userId))->result();
+        // var_dump($result);
         return $result;
     }
     public function get_max_id()

@@ -24,7 +24,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Nama Barang</th>
+                                <th scope="col" class="text-center">Nama Bahan</th>
                                 <th scope="col" class="text-center">Jumlah Hari</th>
                                 <th scope="col" class="text-center">Pengambilan Harian Maximum</th>
                                 <th scope="col" class="text-center">Persediaan Cadangan</th>
@@ -48,10 +48,10 @@
                                 <div class="modal-body">
                                     <input type="hidden" name="id_persediaan_cadangan" id="">
                                     <div class="mb-3 row">
-                                        <label for="id_barang" class="col-sm-4 col-form-label">Nama Barang</label>
+                                        <label for="id_barang" class="col-sm-4 col-form-label">Nama Bahan</label>
                                         <div class="col-sm-8">
                                             <select required class="form-control" name="id_barang" id="id_barang">
-                                                <option selected> ---------- Nama Barang ---------- </option>
+                                                <option selected> ---------- Nama Bahan ---------- </option>
                                                 <?php foreach ($barang as $jb) : ?>
                                                     <option value="<?= $jb->id_barang ?>"><?= $jb->nama_barang ?></option>
                                                 <?php endforeach ?>
