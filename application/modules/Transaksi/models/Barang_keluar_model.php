@@ -16,7 +16,7 @@ class Barang_keluar_model extends CI_Model
     }
     public function get_max_id()
     {
-        $result =  $this->db->get('trans_barang_keluar_get_max_id_vd')->row();
+        $result =  $this->db->get('trans_barang_keluar')->num_rows();
         return $result;
     }
     public function get_barang()

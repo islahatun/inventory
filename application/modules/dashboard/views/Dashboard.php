@@ -48,7 +48,7 @@
                                 <th scope="col" class="text-center">Kode Bahan</th>
                                 <th scope="col" class="text-center">Nama Bahan</th>
                                 <th scope="col" class="text-center">Jenis Bahan</th>
-                                <th scope="col" class="text-center">Stok Persediaan Bahan</th>
+                                <th scope="col" class="text-center">Stok Persediaan Cadangan</th>
                                 <th scope="col" class="text-center">Stok Bahan</th>
                             </tr>
                         </thead>

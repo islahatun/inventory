@@ -48,6 +48,8 @@ class Barang_masuk extends CI_Controller
         // mengambil data sesuai jumlah row
         $max = $this->Barang_masuk_model->get_max_id();
 
+
+
         $urutan = $max + 1;
         $date = date('ymd');
 

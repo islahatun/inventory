@@ -11,7 +11,7 @@
  Target Server Version : 100424 (10.4.24-MariaDB)
  File Encoding         : 65001
 
- Date: 11/06/2023 12:43:38
+ Date: 14/06/2023 15:56:52
 */
 
 SET NAMES utf8mb4;
@@ -39,7 +39,7 @@ CREATE TABLE `tbl_barang`  (
 -- ----------------------------
 INSERT INTO `tbl_barang` VALUES ('BRG00001', 'nama barang ahaa', 2, 2, NULL, '2023-05-20 00:00:00', NULL, NULL, NULL);
 INSERT INTO `tbl_barang` VALUES ('BRG00002', 'sasas', 4, 4, NULL, '2023-05-20 00:00:00', NULL, NULL, NULL);
-INSERT INTO `tbl_barang` VALUES ('BRG00003', 'Baju', 4, 2, NULL, '2023-06-11 00:00:00', 16, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00003', 'Baju', 4, 2, 36, '2023-06-11 00:00:00', 16, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_group_menu
@@ -77,6 +77,8 @@ INSERT INTO `tbl_group_menu` VALUES (3, 14);
 INSERT INTO `tbl_group_menu` VALUES (3, 15);
 INSERT INTO `tbl_group_menu` VALUES (3, 1);
 INSERT INTO `tbl_group_menu` VALUES (3, 2);
+INSERT INTO `tbl_group_menu` VALUES (3, 16);
+INSERT INTO `tbl_group_menu` VALUES (3, 18);
 
 -- ----------------------------
 -- Table structure for tbl_group_user
@@ -128,7 +130,7 @@ CREATE TABLE `tbl_menu`  (
   `active` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'Y',
   `sort` int NULL DEFAULT NULL,
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_menu
@@ -149,6 +151,7 @@ INSERT INTO `tbl_menu` VALUES (13, 12, 'Laporan Bahan Masuk', 'Report/Barang_mas
 INSERT INTO `tbl_menu` VALUES (14, 12, 'Laporan Bahan Keluar', 'Report/Barang_keluar', 'Y', 3);
 INSERT INTO `tbl_menu` VALUES (15, 12, 'Laporan Bahan', 'Report/Master_barang', 'Y', 4);
 INSERT INTO `tbl_menu` VALUES (16, 0, 'Dashboard', 'Dashboard', 'Y', 1);
+INSERT INTO `tbl_menu` VALUES (18, 12, 'Laporan Persediaan Cadangan', 'Report/Master_sefty_stock', 'Y', 5);
 
 -- ----------------------------
 -- Table structure for tbl_rop
@@ -248,7 +251,7 @@ INSERT INTO `tbl_users` VALUES (18, 'Manager', 'Manager', '$2y$10$p5X7ir54UEkscd
 -- ----------------------------
 DROP TABLE IF EXISTS `trans_barang_keluar`;
 CREATE TABLE `trans_barang_keluar`  (
-  `id_trans_keluar` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_trans_keluar` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_barang` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_keluar` date NULL DEFAULT NULL,
   `stok_keluar` int NULL DEFAULT NULL,
@@ -262,15 +265,14 @@ CREATE TABLE `trans_barang_keluar`  (
 -- ----------------------------
 -- Records of trans_barang_keluar
 -- ----------------------------
-INSERT INTO `trans_barang_keluar` VALUES ('TRS-23052200001', 'BRG00003', '2023-05-23', 12, '2023-05-22 00:00:00', 7, NULL, NULL);
-INSERT INTO `trans_barang_keluar` VALUES ('TRS-23053000002', 'BRG002', '2023-05-30', 30, '2023-05-30 00:00:00', 7, NULL, NULL);
+INSERT INTO `trans_barang_keluar` VALUES ('TRSK-23061400001', 'BRG00003', '2023-06-14', 10, '2023-06-14 00:00:00', 18, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for trans_barang_masuk
 -- ----------------------------
 DROP TABLE IF EXISTS `trans_barang_masuk`;
 CREATE TABLE `trans_barang_masuk`  (
-  `id_trans_masuk` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_trans_masuk` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_barang` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_masuk` date NULL DEFAULT NULL,
   `stok_masuk` int NULL DEFAULT NULL,
@@ -284,8 +286,8 @@ CREATE TABLE `trans_barang_masuk`  (
 -- ----------------------------
 -- Records of trans_barang_masuk
 -- ----------------------------
-INSERT INTO `trans_barang_masuk` VALUES ('TRSM-2306110000', 'BRG00003', '2023-06-11', 3, '2023-06-11 00:00:00', 17, '2023-06-11 00:00:00', 17);
-INSERT INTO `trans_barang_masuk` VALUES ('TRSM-2306110001', 'BRG00003', '2023-06-11', 1, '2023-06-11 00:00:00', 17, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSM-2306140000', 'BRG00003', '2023-06-14', 23, '2023-06-14 00:00:00', 17, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSM-23061400002', 'BRG00003', '2023-06-15', 23, '2023-06-14 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- View structure for barang_vd
@@ -294,7 +296,7 @@ DROP VIEW IF EXISTS `barang_vd`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `barang_vd` AS SELECT
 	tbl_barang.id_barang, 
 	tbl_barang.nama_barang, 
-	sum(trans_barang_masuk.stok_masuk) AS stok, 
+	tbl_barang.stok,
 	tbl_jenis_barang.nama_jenis_barang, 
 	tbl_satuan.nama_satuan, 
 	tbl_barang.id_jenis_barang, 
@@ -396,8 +398,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `sefty_stock_barang_vd` A
 	tbl_sefty_stock.persediaan_cadangan, 
 	tbl_barang.id_jenis_barang, 
 	tbl_jenis_barang.nama_jenis_barang, 
-	SUM(trans_barang_masuk.stok_masuk)  AS stok_masuk,
-	SUM(trans_barang_keluar.stok_keluar) as stook_keluar
+	tbl_barang.stok
 FROM
 	tbl_sefty_stock
 	INNER JOIN
@@ -407,7 +408,7 @@ FROM
 	INNER JOIN
 	tbl_jenis_barang
 	ON 
-		tbl_barang.id_jenis_barang = tbl_jenis_barang.id_jenis_barang
+		tbl_barang.id_jenis_barang = tbl_jenis_barang. id_jenis_barang
 	INNER JOIN
 	tbl_satuan
 	ON 
