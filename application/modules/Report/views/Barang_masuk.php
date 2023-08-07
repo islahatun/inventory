@@ -17,7 +17,7 @@
                                 <input required placeholder=" Tanggal Selesai   " type="date" class="form-control" id="date_to" name="date_to">
                             </div>
                             <div class="col-sm-4">
-                                <button class="btn btn-primary" type="submit">Print</button>
+                                <button class="btn btn-primary" type="button" onclick="laporan()">Print</button>
                             </div>
                         </div>
                     </form>
@@ -194,4 +194,13 @@
 
         });
     });
+
+
+	function laporan() {
+		//debugger
+		var awal = $("#date_from").val();
+		var akhir = $("#date_to").val();
+		PatchURL = _url.concat('/exportPDF/', awal, '/', akhir);
+		window.open(PatchURL);
+	}
 </script>

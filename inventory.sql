@@ -3,15 +3,15 @@
 
  Source Server         : localhost-3006
  Source Server Type    : MySQL
- Source Server Version : 100424 (10.4.24-MariaDB)
+ Source Server Version : 100411 (10.4.11-MariaDB)
  Source Host           : localhost:3306
  Source Schema         : inventory
 
  Target Server Type    : MySQL
- Target Server Version : 100424 (10.4.24-MariaDB)
+ Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
- Date: 14/06/2023 15:56:52
+ Date: 30/07/2023 14:19:11
 */
 
 SET NAMES utf8mb4;
@@ -32,14 +32,14 @@ CREATE TABLE `tbl_barang`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_barang`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_barang
 -- ----------------------------
-INSERT INTO `tbl_barang` VALUES ('BRG00001', 'nama barang ahaa', 2, 2, NULL, '2023-05-20 00:00:00', NULL, NULL, NULL);
-INSERT INTO `tbl_barang` VALUES ('BRG00002', 'sasas', 4, 4, NULL, '2023-05-20 00:00:00', NULL, NULL, NULL);
-INSERT INTO `tbl_barang` VALUES ('BRG00003', 'Baju', 4, 2, 36, '2023-06-11 00:00:00', 16, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00001', 'Nama bahan', 2, 2, -10, '2023-07-30 00:00:00', 17, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00002', 'Nama bahan 2', 4, 4, -1, '2023-07-30 00:00:00', 17, NULL, NULL);
+INSERT INTO `tbl_barang` VALUES ('BRG00003', 'Nama bahan 3', 3, 2, NULL, '2023-07-30 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_group_menu
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `tbl_group_menu`;
 CREATE TABLE `tbl_group_menu`  (
   `group_id` int NOT NULL,
   `menu_id` int NOT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_group_menu
@@ -79,6 +79,9 @@ INSERT INTO `tbl_group_menu` VALUES (3, 1);
 INSERT INTO `tbl_group_menu` VALUES (3, 2);
 INSERT INTO `tbl_group_menu` VALUES (3, 16);
 INSERT INTO `tbl_group_menu` VALUES (3, 18);
+INSERT INTO `tbl_group_menu` VALUES (2, 3);
+INSERT INTO `tbl_group_menu` VALUES (2, 7);
+INSERT INTO `tbl_group_menu` VALUES (2, 8);
 
 -- ----------------------------
 -- Table structure for tbl_group_user
@@ -88,7 +91,7 @@ CREATE TABLE `tbl_group_user`  (
   `id_group` int NOT NULL AUTO_INCREMENT,
   `group_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_group_user
@@ -109,7 +112,7 @@ CREATE TABLE `tbl_jenis_barang`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_jenis_barang`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_jenis_barang
@@ -130,7 +133,7 @@ CREATE TABLE `tbl_menu`  (
   `active` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'Y',
   `sort` int NULL DEFAULT NULL,
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_menu
@@ -169,7 +172,7 @@ CREATE TABLE `tbl_rop`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_rop`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_rop
@@ -177,6 +180,8 @@ CREATE TABLE `tbl_rop`  (
 INSERT INTO `tbl_rop` VALUES (2, '0', 7, 45, 49, 364, '2023-05-28 00:00:00', NULL, NULL, NULL);
 INSERT INTO `tbl_rop` VALUES (3, '0', 2, 80, 49, 209, '2023-05-28 00:00:00', NULL, NULL, NULL);
 INSERT INTO `tbl_rop` VALUES (4, '2', 10, 2, 49, 69, '2023-06-11 00:00:00', 16, NULL, NULL);
+INSERT INTO `tbl_rop` VALUES (5, '7', 80, 70, 70, 5670, '2023-07-30 00:00:00', 16, NULL, NULL);
+INSERT INTO `tbl_rop` VALUES (6, '3', 80, 80, 70, 6470, '2023-07-30 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_satuan
@@ -190,7 +195,7 @@ CREATE TABLE `tbl_satuan`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_satuan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_satuan
@@ -213,13 +218,15 @@ CREATE TABLE `tbl_sefty_stock`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_persediaan_cadangan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_sefty_stock
 -- ----------------------------
 INSERT INTO `tbl_sefty_stock` VALUES (1, 'BRG002', 7, 7, 49, '2023-05-28 00:00:00', NULL, NULL, NULL);
-INSERT INTO `tbl_sefty_stock` VALUES (2, 'BRG00003', 7, 10, 70, '2023-06-11 00:00:00', 16, NULL, NULL);
+INSERT INTO `tbl_sefty_stock` VALUES (3, 'BRG00001', 7, 10, 70, '2023-07-30 00:00:00', 17, NULL, NULL);
+INSERT INTO `tbl_sefty_stock` VALUES (6, 'BRG00004', 10, 56, 560, '2023-07-30 00:00:00', 17, NULL, NULL);
+INSERT INTO `tbl_sefty_stock` VALUES (7, 'BRG00002', 7, 10, 70, '2023-07-30 00:00:00', 16, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -236,15 +243,15 @@ CREATE TABLE `tbl_users`  (
   `created_date` datetime NULL DEFAULT NULL,
   `update_date` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_users
 -- ----------------------------
 INSERT INTO `tbl_users` VALUES (7, 'iis2', 'saa', '$2y$10$uiUfiDL7Njibko7ra7O2WORkCrLcI6pVGYal.JKd/EJaTHEwoVMTu', 'Y', NULL, 0, '2023-05-20 00:00:00', NULL);
-INSERT INTO `tbl_users` VALUES (16, 'Administrator', 'Administrator', '$2y$10$cdGq/rMAK/QUiX8E7pPeaeODvByOxA1//R6tyB4IfsPuSWBwExNnS', 'Y', NULL, 1, '2023-06-11 00:00:00', NULL);
-INSERT INTO `tbl_users` VALUES (17, 'Produksi', 'Produksi', '$2y$10$mu5sbm/bjKyCrgEsVAoN/uMwDwQelbG11OaP3IsTHZXtKNzCdKBpO', 'Y', NULL, 2, '2023-06-11 00:00:00', NULL);
-INSERT INTO `tbl_users` VALUES (18, 'Manager', 'Manager', '$2y$10$p5X7ir54UEkscdvTKtyxvObQRKhI5B30fRtDWTY5ueoiVmvxM7Uta', 'Y', NULL, 3, '2023-06-11 00:00:00', NULL);
+INSERT INTO `tbl_users` VALUES (16, 'Produksi', 'Produksi', '$2y$10$cdGq/rMAK/QUiX8E7pPeaeODvByOxA1//R6tyB4IfsPuSWBwExNnS', 'Y', NULL, 2, '2023-06-11 00:00:00', '2023-07-29 00:00:00');
+INSERT INTO `tbl_users` VALUES (17, 'Gudang', 'Gudang', '$2y$10$mu5sbm/bjKyCrgEsVAoN/uMwDwQelbG11OaP3IsTHZXtKNzCdKBpO', 'Y', NULL, 3, '2023-06-11 00:00:00', '2023-07-29 00:00:00');
+INSERT INTO `tbl_users` VALUES (18, 'KepalaGudang', 'Kepala Gudang', '$2y$10$p5X7ir54UEkscdvTKtyxvObQRKhI5B30fRtDWTY5ueoiVmvxM7Uta', 'Y', NULL, 1, '2023-06-11 00:00:00', '2023-07-29 00:00:00');
 
 -- ----------------------------
 -- Table structure for trans_barang_keluar
@@ -260,12 +267,14 @@ CREATE TABLE `trans_barang_keluar`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_trans_keluar`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of trans_barang_keluar
 -- ----------------------------
 INSERT INTO `trans_barang_keluar` VALUES ('TRSK-23061400001', 'BRG00003', '2023-06-14', 10, '2023-06-14 00:00:00', 18, NULL, NULL);
+INSERT INTO `trans_barang_keluar` VALUES ('TRSK-23073000002', 'BRG00001', '2023-07-13', 10, '2023-07-30 00:00:00', 17, NULL, NULL);
+INSERT INTO `trans_barang_keluar` VALUES ('TRSK-23073000003', 'BRG00002', '2023-07-19', 1, '2023-07-30 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for trans_barang_masuk
@@ -281,13 +290,15 @@ CREATE TABLE `trans_barang_masuk`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_trans_masuk`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of trans_barang_masuk
 -- ----------------------------
 INSERT INTO `trans_barang_masuk` VALUES ('TRSM-2306140000', 'BRG00003', '2023-06-14', 23, '2023-06-14 00:00:00', 17, NULL, NULL);
 INSERT INTO `trans_barang_masuk` VALUES ('TRSM-23061400002', 'BRG00003', '2023-06-15', 23, '2023-06-14 00:00:00', 17, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSM-23073000003', 'BRG00001', '2023-07-25', 12, '2023-07-30 00:00:00', 16, NULL, NULL);
+INSERT INTO `trans_barang_masuk` VALUES ('TRSM-23073000004', 'BRG00002', '2023-07-25', 13, '2023-07-30 00:00:00', 16, NULL, NULL);
 
 -- ----------------------------
 -- View structure for barang_vd
@@ -329,7 +340,7 @@ DATE_FORMAT(trans_barang_keluar.tanggal_keluar,'%m')	as bulan ,
 	sum(trans_barang_keluar.stok_keluar) as stok_keluar
 FROM
 	trans_barang_keluar 
-	GROUP BY DATE_FORMAT(trans_barang_keluar.tanggal_keluar,'%m') ;
+	GROUP BY DATE_FORMAT(trans_barang_keluar.tanggal_keluar,'%m') ; ;
 
 -- ----------------------------
 -- View structure for dashboard_barang_masuk_vd
@@ -342,7 +353,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `dashboard_barang_masuk_v
 sum(trans_barang_masuk.stok_masuk) as  stok_masuk
 FROM
 	trans_barang_masuk 
-	GROUP BY DATE_FORMAT(trans_barang_masuk.tanggal_masuk,'%m') ;
+	GROUP BY DATE_FORMAT(trans_barang_masuk.tanggal_masuk,'%m') ; ;
 
 -- ----------------------------
 -- View structure for dashboard_barang_vd
@@ -358,7 +369,7 @@ FROM
 	INNER JOIN
 	tbl_sefty_stock
 	ON 
-		tbl_barang.id_barang = tbl_sefty_stock.id_barang ;
+		tbl_barang.id_barang = tbl_sefty_stock.id_barang ; ;
 
 -- ----------------------------
 -- View structure for rop_vd
@@ -372,7 +383,8 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `rop_vd` AS SELECT
 	tbl_rop.persediaan_cadangan, 
 	tbl_rop.titik_pemesanan_kembali, 
 	tbl_barang.nama_barang, 
-	tbl_satuan.nama_satuan
+	tbl_satuan.nama_satuan,
+	tbl_group_user.id_group
 FROM
 	tbl_rop
 	INNER JOIN
@@ -386,7 +398,9 @@ FROM
 	INNER JOIN
 	tbl_satuan
 	ON 
-		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
+		tbl_barang.id_satuan = tbl_satuan.id_satuan 
+		join tbl_users on tbl_users.id = tbl_sefty_stock.created_by
+		join tbl_group_user on tbl_group_user.id_group = tbl_users.group_id ;
 
 -- ----------------------------
 -- View structure for sefty_stock_barang_vd
@@ -421,7 +435,7 @@ FROM
 	trans_barang_masuk
 	ON 
 		tbl_barang.id_barang = trans_barang_masuk.id_barang
-GROUP BY tbl_barang.id_barang ;
+GROUP BY tbl_barang.id_barang ; ;
 
 -- ----------------------------
 -- View structure for sefty_stock_vd
@@ -434,14 +448,17 @@ tbl_sefty_stock.id_persediaan_cadangan,
 	tbl_sefty_stock.persediaan_cadangan, 
 	tbl_sefty_stock.id_barang, 
 	tbl_barang.nama_barang,
-	tbl_satuan.nama_satuan
+	tbl_satuan.nama_satuan,
+	tbl_group_user.id_group
 FROM
 	tbl_sefty_stock
 	INNER JOIN
 	tbl_barang
 	ON 
 		tbl_sefty_stock.id_barang = tbl_barang.id_barang 
-		join tbl_satuan on tbl_satuan.id_satuan = tbl_barang.id_satuan ;
+		join tbl_satuan on tbl_satuan.id_satuan = tbl_barang.id_satuan 
+		join tbl_users on tbl_users.id = tbl_sefty_stock.created_by
+		join tbl_group_user on tbl_group_user.id_group = tbl_users.group_id ;
 
 -- ----------------------------
 -- View structure for sys_menu_vd
@@ -460,7 +477,7 @@ FROM
 	INNER JOIN
 	tbl_group_menu
 	ON 
-		tbl_menu.menu_id = tbl_group_menu.menu_id ;
+		tbl_menu.menu_id = tbl_group_menu.menu_id ; ;
 
 -- ----------------------------
 -- View structure for trans_barang_keluar_vd
@@ -475,7 +492,8 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `trans_barang_keluar_vd` 
 	trans_barang_keluar.created_by, 
 	tbl_barang.nama_barang, 
 	tbl_users.username, 
-	tbl_satuan.nama_satuan
+	tbl_satuan.nama_satuan,
+	tbl_users.group_id
 FROM
 	trans_barang_keluar
 	INNER JOIN
@@ -489,7 +507,8 @@ FROM
 	INNER JOIN
 	tbl_satuan
 	ON 
-		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
+		tbl_barang.id_satuan = tbl_satuan.id_satuan 
+		join tbl_group_user on tbl_group_user.id_group = tbl_users.group_id ;
 
 -- ----------------------------
 -- View structure for trans_barang_masuk_vd
@@ -504,7 +523,8 @@ trans_barang_masuk.stok_masuk as stok_masuk_current,
 	trans_barang_masuk.created_by, 
 	tbl_barang.nama_barang,
 	tbl_users.`username`,
-	tbl_satuan.nama_satuan
+	tbl_satuan.nama_satuan,
+	tbl_users.group_id
 FROM
 	trans_barang_masuk
 	INNER JOIN
@@ -518,7 +538,8 @@ FROM
 		INNER JOIN
 	tbl_satuan
 	ON 
-		tbl_barang.id_satuan = tbl_satuan.id_satuan ;
+		tbl_barang.id_satuan = tbl_satuan.id_satuan 
+		join tbl_group_user on tbl_group_user.id_group = tbl_users.group_id ;
 
 -- ----------------------------
 -- View structure for user_vd
@@ -538,6 +559,6 @@ FROM
 	INNER JOIN
 	tbl_group_user
 	ON 
-		tbl_users.group_id = tbl_group_user.id_group ;
+		tbl_users.group_id = tbl_group_user.id_group ; ;
 
 SET FOREIGN_KEY_CHECKS = 1;
