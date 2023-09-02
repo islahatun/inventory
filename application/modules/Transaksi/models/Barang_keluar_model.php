@@ -42,7 +42,7 @@ class Barang_keluar_model extends CI_Model
 	}
 	public function edit($data, $data_barang)
 	{
-		$this->db->where('id_trans_masuk', $data['id_trans_masuk']);
+		$this->db->where('id_trans_keluar', $data['id_trans_keluar']);
 		$this->db->update('trans_barang_keluar', $data);
 
 		$this->db->where('id_barang', $data['id_barang']);
@@ -51,7 +51,7 @@ class Barang_keluar_model extends CI_Model
 	}
 	public function delete($where)
 	{
-		$this->db->where('id_trans_masuk', $where);
+		$this->db->where('id_trans_keluar', $where);
 		$this->db->delete('trans_barang_keluar');
 	}
 }
