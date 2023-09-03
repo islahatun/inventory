@@ -27,7 +27,7 @@
 								<th scope="col" class="text-center">Nama Bahan</th>
 								<th scope="col" class="text-center">Jumlah Hari</th>
 								<th scope="col" class="text-center">Pengambilan Harian Maximum</th>
-								<th scope="col" class="text-center">Persediaan Cadangan</th>
+								<th scope="col" class="text-center">Sefty Stock</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -28,6 +28,7 @@ class Master_satuan extends CI_Controller
                 'nomor'                 => $i,
                 'id_satuan'         => $di->id_satuan,
                 'nama_satuan'         => $di->nama_satuan,
+				'descripsi'			=>$di->descripsi
             );
             $i++;
         }
@@ -45,6 +46,7 @@ class Master_satuan extends CI_Controller
         } else {
             $data = array(
                 'nama_satuan' => $this->input->post('nama_satuan'),
+				'descripsi'	=> $this->input->post('descripsi'),
                 'created_date' => date('y-m-d'),
                 'created_by' => $this->session->userdata('id')
             );
@@ -71,6 +73,7 @@ class Master_satuan extends CI_Controller
         $data = [
             'id_satuan' => $this->input->post('id_satuan'),
             'nama_satuan' => $this->input->post('nama_satuan'),
+			'descripsi'	=> $this->input->post('descripsi'),
             'update_date' => date('y-m-d'),
             'update_by' => $this->session->userdata('id')
         ];

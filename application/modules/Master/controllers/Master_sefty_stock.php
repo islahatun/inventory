@@ -11,7 +11,7 @@ class Master_sefty_stock extends CI_Controller
 	}
 	public function index()
 	{
-		$data['title'] = 'Persediaan Cadangan';
+		$data['title'] = 'Sefty Stock';
 		$data['barang'] = $this->Master_sefty_stock_model->get_barang();
 
 		$data['content_overview'] = $this->load->view('Master_sefty_stock', $data, true);
