@@ -28,13 +28,13 @@ class Master_sefty_stock_model extends CI_Model
 	}
 	public function edit($data)
 	{
-		$this->db->where('id_persediaan_cadangan', $data['id_persediaan_cadangan']);
+		$this->db->where('id_barang', $data['id_barang']);
 		$result =  $this->db->update('tbl_sefty_stock', $data);
 		return $result;
 	}
 	public function delete($where)
 	{
-		$this->db->where('id_persediaan_cadangan', $where);
+		$this->db->where('id_barang', $where);
 		$this->db->delete('tbl_sefty_stock');
 	}
 }

@@ -9,7 +9,7 @@
 				<div class="card-body mt-3">
 
 					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-success btn-sm mb-3" onclick="create(this)">
+					<!-- <button type="button" class="btn btn-success btn-sm mb-3" onclick="create(this)">
 						Tambah
 					</button>
 					<button type="button" class="btn btn-primary btn-sm mb-3" onclick="Edit(this)">
@@ -17,7 +17,7 @@
 					</button>
 					<button type="button" class="btn btn-danger btn-sm mb-3" onclick="Delete(this)">
 						Hapus
-					</button>
+					</button> -->
 
 					<!-- Default Table -->
 					<table class="table table-responsive-sm" id="dt">

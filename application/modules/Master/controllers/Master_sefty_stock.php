@@ -100,8 +100,6 @@ class Master_sefty_stock extends CI_Controller
 
 		$where =  $this->input->post('id');
 
-		var_dump($where);
-
 		$this->Master_sefty_stock_model->delete($where);
 	}
 }

@@ -8,6 +8,8 @@ class Master_barang extends CI_Controller
 
 		parent::__construct();
 		$this->load->model('Master_barang_model');
+		$this->load->model('Master_rop_model');
+		$this->load->model('Master_sefty_stock_model');
 	}
 	public function index()
 	{
@@ -34,7 +36,16 @@ class Master_barang extends CI_Controller
 				'nama_barang'         => $di->nama_barang,
 				'nama_jenis_barang'       => $di->nama_jenis_barang,
 				'nama_satuan'       => $di->nama_satuan,
-				'stok'       => $di->stok,
+				'harga'       => $di->harga,
+				'persediaan_cadangan'       => $di->persediaan_cadangan,
+				'titik_pemesanan_kembali'       => $di->titik_pemesanan_kembali,
+				'min'       => $di->min,
+				'max'       => $di->max,
+				'waktu_tunggu'       => $di->waktu_tunggu,
+				'permintaan_rata_rata'       => $di->permintaan_rata_rata,
+				'jumlah_hari'       => $di->jumlah_hari,
+				'pengambilan_harian_maximum'       => $di->pengambilan_harian_maximum,
+
 			);
 			$i++;
 		}
@@ -54,17 +65,55 @@ class Master_barang extends CI_Controller
 		// angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
 		$huruf = "BRG";
 		$id_barang = $huruf . sprintf("%05s", $urutan);
+		$ss = $this->input->post('jumlah_hari') * $this->input->post('pengambilan_harian_maximum');
+		$max = $ss + (2 * $this->input->post('jumlah_hari'));
+		$min = $ss - $this->input->post('jumlah_hari');
 
 
+		// master bahan baku
 		$data = array(
 			'id_barang' => $id_barang,
 			'nama_barang' => $this->input->post('nama_barang'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+			'harga' => $this->input->post('harga'),
+			'max' => $max,
+			'min' => $min,
 			'created_date' => date('y-m-d'),
 			'created_by' => $this->session->userdata('id')
 		);
 		$result =  $this->Master_barang_model->save($data);
+		// master bahan baku end
+
+		// master sefty stock
+		$data_sefty_stock = array(
+			'jumlah_hari' => $this->input->post('jumlah_hari'),
+			'pengambilan_harian_maximum' => $this->input->post('pengambilan_harian_maximum'),
+			'id_barang' => $id_barang,
+			'persediaan_cadangan' => $ss,
+			'created_date' => date('y-m-d'),
+			'created_by' => $this->session->userdata('id')
+		);
+		$result =  $this->Master_sefty_stock_model->save($data_sefty_stock);
+		// master sefty stock end
+
+
+		// master rop
+		$ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($id_barang);
+
+		$rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
+		$data_rop = array(
+			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+			'titik_pemesanan_kembali' => $rop,
+			'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
+			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+			'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+			'persediaan_cadangan' => $ss->persediaan_cadangan,
+			'created_date' => date('y-m-d'),
+			'created_by' => $this->session->userdata('id')
+		);
+		$result =  $this->Master_rop_model->save($data_rop);
+		// master rop end
 
 		if ($result) {
 			$message = array(
@@ -84,16 +133,51 @@ class Master_barang extends CI_Controller
 	public function edit()
 	{
 
+		$ss = $this->input->post('jumlah_hari') * $this->input->post('pengambilan_harian_maximum');
+		$max = $ss + (2 * $this->input->post('jumlah_hari'));
+		$min = $ss - $this->input->post('jumlah_hari');
 
 		$data = [
 			'id_barang' => $this->input->post('id_barang'),
 			'nama_barang' => $this->input->post('nama_barang'),
 			'id_satuan' => $this->input->post('id_satuan'),
 			'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+			'harga' => $this->input->post('harga'),
+			'max' => $max,
+			'min' => $min,
 			'update_date' => date('y-m-d'),
 			'update_by' => $this->session->userdata('id')
 		];
 		$result =  $this->Master_barang_model->edit($data);
+
+
+		$data_sefty_stock = [
+			'id_barang' => $this->input->post('id_barang'),
+			'jumlah_hari' => $this->input->post('jumlah_hari'),
+			'pengambilan_harian_maximum' => $this->input->post('pengambilan_harian_maximum'),
+			'persediaan_cadangan' => $ss,
+			'update_date' => date('y-m-d'),
+			'update_by' => $this->session->userdata('id')
+		];
+		$result =  $this->Master_sefty_stock_model->edit($data_sefty_stock);
+
+
+		$ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($this->input->post('id_barang'));
+
+		$rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
+		$data_rop = [
+			'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
+			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+			'titik_pemesanan_kembali' => $rop,
+			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+			'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+			'persediaan_cadangan' => $ss->persediaan_cadangan,
+			'update_date' => date('y-m-d'),
+			'update_by' => $this->session->userdata('id')
+		];
+		$result =  $this->Master_rop_model->edit($data_rop);
+
+
 		if ($result) {
 			$message = array(
 				'status' => true,
@@ -113,5 +197,13 @@ class Master_barang extends CI_Controller
 		$where =  $this->input->post('id');
 
 		$this->Master_barang_model->delete($where);
+
+		$where =  $this->input->post('id_barang');
+
+		$this->Master_sefty_stock_model->delete($where);
+
+		$where =  $this->input->post('id_persediaan_cadangan');
+
+		$this->Master_rop_model->delete($where);
 	}
 }

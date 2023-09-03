@@ -20,9 +20,9 @@ class Master_rop_model extends CI_Model
 		$result =  $this->db->get('sefty_stock_vd')->result();
 		return $result;
 	}
-	public function get_persediaan_cadangan_barang_byId()
+	public function get_persediaan_cadangan_barang_byId($id_barang)
 	{
-		$result =  $this->db->get('sefty_stock_vd')->row();
+		$result =  $this->db->get_where('sefty_stock_vd', ['id_barang' => $id_barang])->row();
 		return $result;
 	}
 	public function save($data)
@@ -32,13 +32,13 @@ class Master_rop_model extends CI_Model
 	}
 	public function edit($data)
 	{
-		$this->db->where('id_rop', $data['id_rop']);
+		$this->db->where('id_persediaan_cadangan', $data['id_persediaan_cadangan']);
 		$result =  $this->db->update('tbl_rop', $data);
 		return $result;
 	}
 	public function delete($where)
 	{
-		$this->db->where('id_rop', $where);
+		$this->db->where('id_persediaan_cadangan', $where);
 		$this->db->delete('tbl_rop');
 	}
 }
