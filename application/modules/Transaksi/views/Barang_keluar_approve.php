@@ -52,27 +52,13 @@
                                     <input type="hidden" name="id_trans_keluar" id="">
                                     <input type="hidden" name="stok_keluar_current" id="">
                                     <div class="mb-3 row">
-                                        <label for="id_barang" class="col-sm-4 col-form-label">Nama Barang</label>
+                                        <label for="status" class="col-sm-4 col-form-label">Status</label>
                                         <div class="col-sm-8">
-                                            <select required class="form-control" name="id_barang" id="id_barang">
-                                                <option selected> ---------- Barang ---------- </option>
-                                                <?php foreach ($barang as $b) : ?>
-                                                    <option value="<?= $b->id_barang ?>"><?= $b->nama_barang ?></option>
-                                                <?php endforeach ?>
+                                            <select required class="form-control" name="status" id="status">
+                                                <option selected> ---------- Status ---------- </option>
+												<option value="Disetujui" > Disetujui </option>
+												<option value="Ditolak" > Ditolak </option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="tanggal_keluar" class="col-sm-4 col-form-label">Tanggal Keluar</label>
-                                        <div class="col-sm-8">
-                                            <input required type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar">
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label for="stok_keluar" class="col-sm-4 col-form-label">Jumlah Barang</label>
-                                        <div class="col-sm-8">
-                                            <input required type="number" class="form-control" id="stok_keluar" name="stok_keluar">
                                         </div>
                                     </div>
 

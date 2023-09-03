@@ -35,6 +35,7 @@ class Barang_keluar extends CI_Controller
 				'stok_keluar_current' => $di->stok_keluar_current,
 				'created_by'       => $di->created_by,
 				'username'       => $di->username,
+				'status'       => $di->status,
 			);
 			$i++;
 		}
