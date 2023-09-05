@@ -11,7 +11,7 @@
  Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
- Date: 04/09/2023 00:31:19
+ Date: 05/09/2023 08:28:23
 */
 
 SET NAMES utf8mb4;
@@ -48,6 +48,7 @@ INSERT INTO `tbl_barang` VALUES ('BRG00005', 'Testing barang', 4, 5, NULL, 70000
 INSERT INTO `tbl_barang` VALUES ('BRG00006', 'test barang ke 3', 4, 5, NULL, 1000.00, NULL, NULL, '2023-09-03 00:00:00', 17, NULL, NULL);
 INSERT INTO `tbl_barang` VALUES ('BRG00007', 'test ke 4', 4, 5, NULL, 1000.00, 84, 77, '2023-09-03 00:00:00', 17, NULL, NULL);
 INSERT INTO `tbl_barang` VALUES ('BRG00008', 'test ke 5', 4, 5, NULL, 1000.00, 3, 0, '2023-09-03 00:00:00', 17, '2023-09-03 00:00:00', 17);
+INSERT INTO `tbl_barang` VALUES ('BRG00009', 'barang ke 6', 3, 5, NULL, 1000.00, 406, 385, '2023-09-05 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_group_menu
@@ -154,8 +155,8 @@ INSERT INTO `tbl_menu` VALUES (3, 0, 'Master', 'Master', 'Y', 3);
 INSERT INTO `tbl_menu` VALUES (4, 3, 'Master Bahan', 'Master/Master_barang', 'Y', 6);
 INSERT INTO `tbl_menu` VALUES (5, 3, 'Master Jenis Bahan', 'Master/Master_jenis_barang', 'Y', 5);
 INSERT INTO `tbl_menu` VALUES (6, 3, 'Master Satuan', 'Master/Master_satuan', 'Y', 4);
-INSERT INTO `tbl_menu` VALUES (7, 3, 'Sefty Stock', 'Master/Master_sefty_stock', 'Y', 6);
-INSERT INTO `tbl_menu` VALUES (8, 3, 'Master ROP', 'Master/Master_rop', 'Y', 7);
+INSERT INTO `tbl_menu` VALUES (7, 3, 'Sefety Stock', 'Master/Master_sefty_stock', 'Y', 6);
+INSERT INTO `tbl_menu` VALUES (8, 3, 'Master ROP', 'Master/Master_rop', 'N', 7);
 INSERT INTO `tbl_menu` VALUES (9, 0, 'Transaksi', 'Transaksi', 'Y', 4);
 INSERT INTO `tbl_menu` VALUES (10, 9, 'Bahan Masuk', 'Transaksi/Barang_masuk', 'Y', 2);
 INSERT INTO `tbl_menu` VALUES (11, 9, 'Bahan Keluar', 'Transaksi/Barang_keluar', 'Y', 3);
@@ -164,7 +165,7 @@ INSERT INTO `tbl_menu` VALUES (13, 12, 'Laporan Bahan Masuk', 'Report/Barang_mas
 INSERT INTO `tbl_menu` VALUES (14, 12, 'Laporan Bahan Keluar', 'Report/Barang_keluar', 'Y', 3);
 INSERT INTO `tbl_menu` VALUES (15, 12, 'Laporan Bahan', 'Report/Master_barang', 'Y', 4);
 INSERT INTO `tbl_menu` VALUES (16, 0, 'Dashboard', 'Dashboard', 'Y', 1);
-INSERT INTO `tbl_menu` VALUES (18, 12, 'Laporan Sefty Stock', 'Report/Master_sefty_stock', 'Y', 5);
+INSERT INTO `tbl_menu` VALUES (18, 12, 'Laporan Sefety Stock', 'Report/Master_sefty_stock', 'Y', 5);
 INSERT INTO `tbl_menu` VALUES (19, 9, 'Persetujuan Bahan Keluar', 'Transaksi/Barang_keluar_approve', 'Y', 4);
 
 -- ----------------------------
@@ -236,7 +237,7 @@ CREATE TABLE `tbl_sefty_stock`  (
   `update_date` datetime NULL DEFAULT NULL,
   `update_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_persediaan_cadangan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tbl_sefty_stock
@@ -250,6 +251,7 @@ INSERT INTO `tbl_sefty_stock` VALUES (9, 'BRG00005', 10, 10, 100, '2023-09-03 00
 INSERT INTO `tbl_sefty_stock` VALUES (10, 'BRG00006', 7, 10, 70, '2023-09-03 00:00:00', 17, NULL, NULL);
 INSERT INTO `tbl_sefty_stock` VALUES (11, 'BRG00007', 7, 10, 70, '2023-09-03 00:00:00', 17, NULL, NULL);
 INSERT INTO `tbl_sefty_stock` VALUES (12, 'BRG00008', 1, 1, 1, '2023-09-03 00:00:00', 17, '2023-09-03 00:00:00', 17);
+INSERT INTO `tbl_sefty_stock` VALUES (13, 'BRG00009', 7, 56, 392, '2023-09-05 00:00:00', 17, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -339,9 +341,9 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `barang_vd` AS SELECT
 	tbl_satuan.nama_satuan, 
 	tbl_barang.id_jenis_barang, 
 	tbl_barang.id_satuan,
-	tbl_rop.titik_pemesanan_kembali,
-	tbl_rop.permintaan_rata_rata,
-	tbl_rop.waktu_tunggu,
+-- 	tbl_rop.titik_pemesanan_kembali,
+-- 	tbl_rop.permintaan_rata_rata,
+-- 	tbl_rop.waktu_tunggu,
 	tbl_sefty_stock.persediaan_cadangan,
 	tbl_sefty_stock.jumlah_hari,
 	tbl_sefty_stock.pengambilan_harian_maximum
@@ -356,7 +358,6 @@ FROM
 	ON 
 		tbl_barang.id_satuan = tbl_satuan.id_satuan
 	INNER JOIN tbl_sefty_stock on tbl_sefty_stock.id_barang = tbl_barang.id_barang
-	INNER JOIN tbl_rop on tbl_rop.id_persediaan_cadangan = tbl_sefty_stock.id_persediaan_cadangan
 		
 		GROUP BY tbl_barang.id_barang ;
 
