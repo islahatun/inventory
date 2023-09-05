@@ -38,11 +38,11 @@ class Master_barang extends CI_Controller
 				'nama_satuan'       => $di->nama_satuan,
 				'harga'       => $di->harga,
 				'persediaan_cadangan'       => $di->persediaan_cadangan,
-				'titik_pemesanan_kembali'       => $di->titik_pemesanan_kembali,
+				// 'titik_pemesanan_kembali'       => $di->titik_pemesanan_kembali,
 				'min'       => $di->min,
 				'max'       => $di->max,
-				'waktu_tunggu'       => $di->waktu_tunggu,
-				'permintaan_rata_rata'       => $di->permintaan_rata_rata,
+				// 'waktu_tunggu'       => $di->waktu_tunggu,
+				// 'permintaan_rata_rata'       => $di->permintaan_rata_rata,
 				'jumlah_hari'       => $di->jumlah_hari,
 				'pengambilan_harian_maximum'       => $di->pengambilan_harian_maximum,
 
@@ -99,20 +99,20 @@ class Master_barang extends CI_Controller
 
 
 		// master rop
-		$ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($id_barang);
+		// $ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($id_barang);
 
-		$rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
-		$data_rop = array(
-			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
-			'titik_pemesanan_kembali' => $rop,
-			'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
-			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
-			'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
-			'persediaan_cadangan' => $ss->persediaan_cadangan,
-			'created_date' => date('y-m-d'),
-			'created_by' => $this->session->userdata('id')
-		);
-		$result =  $this->Master_rop_model->save($data_rop);
+		// $rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
+		// $data_rop = array(
+		// 	'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+		// 	'titik_pemesanan_kembali' => $rop,
+		// 	'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
+		// 	'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+		// 	'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+		// 	'persediaan_cadangan' => $ss->persediaan_cadangan,
+		// 	'created_date' => date('y-m-d'),
+		// 	'created_by' => $this->session->userdata('id')
+		// );
+		// $result =  $this->Master_rop_model->save($data_rop);
 		// master rop end
 
 		if ($result) {
@@ -162,20 +162,20 @@ class Master_barang extends CI_Controller
 		$result =  $this->Master_sefty_stock_model->edit($data_sefty_stock);
 
 
-		$ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($this->input->post('id_barang'));
+		// $ss = $this->Master_rop_model->get_persediaan_cadangan_barang_byId($this->input->post('id_barang'));
 
-		$rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
-		$data_rop = [
-			'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
-			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
-			'titik_pemesanan_kembali' => $rop,
-			'waktu_tunggu' => $this->input->post('waktu_tunggu'),
-			'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
-			'persediaan_cadangan' => $ss->persediaan_cadangan,
-			'update_date' => date('y-m-d'),
-			'update_by' => $this->session->userdata('id')
-		];
-		$result =  $this->Master_rop_model->edit($data_rop);
+		// $rop = ($this->input->post('waktu_tunggu') * $this->input->post('permintaan_rata_rata')) + $ss->persediaan_cadangan;
+		// $data_rop = [
+		// 	'id_persediaan_cadangan' => $ss->id_persediaan_cadangan,
+		// 	'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+		// 	'titik_pemesanan_kembali' => $rop,
+		// 	'waktu_tunggu' => $this->input->post('waktu_tunggu'),
+		// 	'permintaan_rata_rata' => $this->input->post('permintaan_rata_rata'),
+		// 	'persediaan_cadangan' => $ss->persediaan_cadangan,
+		// 	'update_date' => date('y-m-d'),
+		// 	'update_by' => $this->session->userdata('id')
+		// ];
+		// $result =  $this->Master_rop_model->edit($data_rop);
 
 
 		if ($result) {

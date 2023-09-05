@@ -29,8 +29,8 @@
 								<th scope="col" class="text-center">Jenis Bahan</th>
 								<th scope="col" class="text-center">Satuan Bahan</th>
 								<th scope="col" class="text-center">Harga</th>
-								<th scope="col" class="text-center">Sefty Stock</th>
-								<th scope="col" class="text-center">ROP</th>
+								<th scope="col" class="text-center">Sefety Stock</th>
+								<!-- <th scope="col" class="text-center">ROP</th> -->
 								<th scope="col" class="text-center">Minimal Barang</th>
 								<th scope="col" class="text-center">Maximal barang</th>
 							</tr>
@@ -98,7 +98,7 @@
 											<input required type="text" class="form-control" id="pengambilan_harian_maximum" name="pengambilan_harian_maximum">
 										</div>
 									</div>
-									<div class="mb-3 row">
+									<!-- <div class="mb-3 row">
 										<label for="waktu_tunggu" class="col-sm-4 col-form-label">Waktu Tunggu</label>
 										<div class="col-sm-8">
 											<input required type="text" class="form-control" id="waktu_tunggu" name="waktu_tunggu">
@@ -109,7 +109,7 @@
 										<div class="col-sm-8">
 											<input required type="text" class="form-control" id="permintaan_rata_rata" name="permintaan_rata_rata">
 										</div>
-									</div>
+									</div> -->
 
 								</div>
 								<div class="modal-footer">
@@ -172,10 +172,10 @@
 					"data": "persediaan_cadangan",
 					className: "align-middle text-center small"
 				},
-				{
-					"data": "titik_pemesanan_kembali",
-					className: "align-middle text-center small"
-				},
+				// {
+				// 	"data": "titik_pemesanan_kembali",
+				// 	className: "align-middle text-center small"
+				// },
 				{
 					"data": "min",
 					className: "align-middle text-center small"
